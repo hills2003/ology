@@ -28,15 +28,14 @@ export default function RootLayout({
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="h-screen grid lg:grid-cols-[20%_1fr] bg-[#0d1220]">
+      <body className="h-screen w-full overflow-x-hidden bg-[#0d1220] lg:grid lg:grid-cols-[20%_1fr]">
         {/* Sidebar */}
-        <aside className="hidden lg:block border-r border-[#E8E9F31A] h-screen overflow-hidden">
+        <aside className="hidden lg:block border-r border-[#E8E9F31A] h-[calc(100vh-70px)] mt-[70px]">
           <Sidebar />
         </aside>
 
         {/* Main Content */}
         <div className="flex flex-col h-screen">
-          {/* Scrollable content only here */}
           <div className="flex-1 overflow-y-auto">{children}</div>
         </div>
       </body>

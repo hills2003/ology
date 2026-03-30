@@ -60,7 +60,7 @@ export default function Home() {
   ];
 
   return (
-    <header className="sticky top-0 z-50 w-full h-[70px] flex items-center bg-[#0d1220] border-b border-[#E8E9F31A]">
+    <header className="sticky top-0 z-50 w-full h-[72px] flex items-center bg-[#0d1220] border-b border-[#E8E9F31A]">
       {/* Inner container aligns content with body */}
       <div className="flex items-center justify-between w-full max-w-7xl mx-auto px-5 md:px-8">
         {/* Logo + Hamburger */}
