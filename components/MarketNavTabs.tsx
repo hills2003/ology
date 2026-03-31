@@ -29,215 +29,261 @@ export default function MarketNavTabs() {
   }, []);
 
   return (
-    <div className="w-full flex flex-col items-center mt-12.5">
-      <div className="flex gap-[11px] max-w-3xl justify-around relative">
+    <>
+      <div className="flex gap-2.75 items-end  justify-center self-stretch relative">
         {tabs.map((tab) => {
           const isActive =
             tab.id === "markets"
               ? activeTab === "markets"
               : pathname === tab.href; // active if on that page
 
-          if (tab.href) {
-            // Tabs that navigate to another page
-            return (
-              <Link
-                key={tab.id}
-                href={tab.href}
-                className={`
-                  relative flex items-center justify-center
+          // Markets tab stays here
+          return (
+            <button
+              key={tab.id}
+              className={` relative flex items-center justify-center
                   w-[120px] h-[40px] px-[24px] py-[8px] gap-[8px]
-                  rounded-[16px] border
+                  rounded-[16px] border  
                   ${
                     isActive
                       ? "bg-[#1C2233] border-transparent"
                       : "bg-[#1E25404D] border-[#7A849A1A] backdrop-blur-[30px]"
                   }
-                  text-sm font-satoshi text-white
-                `}
-              >
-                {tab.label}
+                  font-satoshi text-[#F8F7FC]
 
-                {/* Green dot indicator for active tab */}
-                {isActive && (
-                  <span
-                    className="absolute"
-                    style={{
-                      width: "14.82px",
-                      height: "14px",
-                      top: "-7px",
-                      right: "4px",
-                      background: "#316E60C4",
-                      borderRadius: "50%",
-                    }}
-                  />
-                )}
-              </Link>
-            );
-          } else {
-            // Markets tab stays here
-            return (
-              <button
-                key={tab.id}
-                onClick={() => setActiveTab(tab.id as "markets")}
-                className={`
-                  relative flex items-center justify-center
-                  w-[120px] h-[40px] px-[24px] py-[8px] gap-[8px]
-                  rounded-[16px] border
-                  ${
-                    isActive
-                      ? "bg-[#1C2233] border-transparent"
-                      : "bg-[#1E25404D] border-[#7A849A1A] backdrop-blur-[30px]"
-                  }
-                  text-sm font-satoshi text-white
+                  font-Satoshi 
+                  text-[14px] 
+                  font-bold   
+                  leading-[1.5]  
+                  text-center  
                 `}
-              >
-                {tab.label}
+            >
+              {tab.label}
 
-                {isActive && (
-                  <span
-                    className="absolute"
-                    style={{
-                      width: "14.82px",
-                      height: "14px",
-                      top: "-7px",
-                      right: "4px",
-                      background: "#316E60C4",
-                      borderRadius: "50%",
-                    }}
-                  />
-                )}
-              </button>
-            );
-          }
+              {isActive && (
+                <span
+                  className="absolute"
+                  style={{
+                    width: "14.82px",
+                    height: "14px",
+                    top: "-7px",
+                    right: "4px",
+                    background: "#316E60C4",
+                    borderRadius: "50%",
+                  }}
+                />
+              )}
+            </button>
+          );
         })}
       </div>
 
-      <div className="flex justify-center px-1px]">
-        <div className="mt-6 w-full max-w-3xl mx-auto">
-          {activeTab === "markets" && (
-            <div
-              className="w-95.5 h-47 p-[10px_20px] rounded-[20px] border border-[#7A849A1A] flex flex-col justify-between items-center gap-7.5 opacity-100"
-              style={{
-                background:
-                  "linear-gradient(179.37deg, rgba(165,196,211,0.055) 15.5%, rgba(93,112,125,0.055) 63.9%, rgba(10,14,26,0.055) 99.46%)",
-              }}
-            >
-              <ClarityIndexBar />
+      <div
+        className="w-95.5 h-47 py-7.5 px-5 rounded-[20px] border border-[#7A849A1A] flex flex-col justify-center items-start gap-7.5"
+        style={{
+          background:
+            "linear-gradient(179.37deg, rgba(165,196,211,0.055) 15.5%, rgba(93,112,125,0.055) 63.9%, rgba(10,14,26,0.055) 99.46%)",
+        }}
+      >
+        <ClarityIndexBar />
+      </div>
 
-              <div
-                className="w-[382px] mt-[50px] 
-             pt-[30px] pl-[20px] pr-[20px] pb-[30px] 
+      <div
+        className="w-full min-h-[129.858px]
+             py-7.5 px-5
              rounded-[20px] border border-[#7A849A1A] 
              bg-[linear-gradient(179.37deg,rgba(165,196,211,0.055)_15.5%,rgba(93,112,125,0.055)_63.9%,rgba(10,14,26,0.055)_99.46%)] 
              opacity-100
-             flex flex-col"
-              >
-                {/* Header */}
-                <div className="flex justify-between items-center mb-6">
-                  <div className="flex flex-col justify-around">
-                    <h1 className="text-[21.64px] font-medium leading-[130%] font-Recoleta">
-                      Portfolio Performance
-                    </h1>
-                    <p className="leading-[140%] text-[15.15px] font-Satoshi font-medium">
-                      Last {data?.portfolio?.dayCount} days
-                    </p>
-                  </div>
+             flex flex-col justify-center items-start self-stretch gap-7.5"
+      >
+        {/* Header */}
+        <div className="flex min-h-[60.601px] py-[10.822px] justify-between items-center self-stretch">
+          <div className="flex flex-col justify-between">
+            <h1 className="text-[21.643px] font-normal leading-[130%] tracking-[-0.004px] font-Recoleta">
+              Portfolio Performance
+            </h1>
+            <p
+              className="leading-[140%] text-[15.15px] font-Satoshi font-normal text-[#C5D1E0]"
+              style={
+                {
+                  leadingTrim: "both",
+                  textEdge: "cap",
+                } as any
+              }
+            >
+              Last {data?.portfolio?.dayCount} days
+            </p>
+          </div>
 
-                  <button
-                    className="w-[97.97px] h-[52.96px] gap-[15.88px] 
-                 pt-[19.98px] pr-[12.49px] pb-[19.98px] pl-[12.49px] 
-                 rounded-[12.71px] 
+          <button
+            className="w-[97.97px] h-[52.96px] gap-[15.884px] 
+                 py-[19.98px]  px-[12.49px] 
+                 rounded-[12.707px] 
                  bg-[#5FCDD91A] 
-                 opacity-100
-                 flex items-center justify-center text-[17.48px] font-medium font-Satoshi leading-[140%] text-[#7DD3C0]"
-                  >
-                    {data?.portfolio?.percentageChange}%
-                  </button>
-                </div>
+                 opacity-100 
+                 flex flex-col items-center justify-center text-[17.48px] font-medium font-Satoshi leading-[140%] text-[#7DD3C0]"
+          >
+            {data?.portfolio?.percentageChange}%
+          </button>
+        </div>
 
-                <hr className="w-full h-0 border-[1.08px] border-[#6C8BA41A] opacity-100 mb-4" />
-
-                {/* Stats grid */}
-                <div className="grid grid-cols-2 gap-4 mt-[40px]">
-                  {[
-                    {
-                      title: "Total Value",
-                      value: `$${data?.portfolio.totalValue}`,
-                    },
-                    {
-                      title: "24h Change",
-                      value: `+$${data?.portfolio.change24h}`,
-                    },
-                    {
-                      title: "Win Rate",
-                      value: `${data?.portfolio.winRate * 100}%`,
-                    },
-                    {
-                      title: "Active Positions",
-                      value: data?.portfolio.activePositions,
-                    },
-                  ].map((item, index) => (
-                    <div
-                      key={index}
-                      className="w-[162.34px] h-[85.6px] 
-             flex flex-col items-center justify-center gap-[10.82px]
+        <div className="flex py-[1.082px] justify-center items-center gap-[10.822px] self-stretch">
+          <hr className="w-full h-0 border-[1.08px] border-[#6C8BA41A] opacity-100" />
+        </div>
+        {/* Stats grid */}
+        <div className="grid grid-cols-2 gap-[17.314px] self-stretch py-[10.822px]">
+          {[
+            {
+              title: "Total Value",
+              value: `${new Intl.NumberFormat("en-US", {
+                style: "currency",
+                currency: "USD",
+                minimumFractionDigits: 0,
+                maximumFractionDigits: 0,
+              }).format(data?.portfolio.totalValue)}`,
+            },
+            {
+              title: "24h Change",
+              value: `+${new Intl.NumberFormat("en-US", {
+                style: "currency",
+                currency: "USD",
+                minimumFractionDigits: 0,
+                maximumFractionDigits: 0,
+              }).format(data?.portfolio.change24h)}`,
+            },
+            {
+              title: "Win Rate",
+              value: `${new Intl.NumberFormat("en-US", {
+                style: "percent",
+                minimumFractionDigits: 0,
+                maximumFractionDigits: 2,
+              }).format(data?.portfolio.winRate)}`,
+            },
+            {
+              title: "Active Positions",
+              value: data?.portfolio.activePositions,
+            },
+          ].map((item, index) => (
+            <div
+              key={index}
+              className="w-[162.34px] h-[85.6px] 
             
-             rounded-[12.99px] 
-             bg-[#151B3066]"
-                    >
-                      {/* Title */}
-                      <span className="font-Satoshi font-medium text-[12.99px] leading-[140%] text-[#7A849A]">
-                        {item.title}
-                      </span>
-
-                      {/* Value */}
-                      <span
-                        className="font-semibold font-Satoshi text-[21.64px] leading-[140%]"
-                        style={{
-                          color:
-                            item.title === "24h Change" ? "#7DD3C0" : "#F8F7FC",
-                        }}
-                      >
-                        {item.value}
-                      </span>
-                    </div>
-                  ))}
-                </div>
-
-                <div className="mt-[40px]">
-                  <PortfolioChart data={data?.chartData} />
-                </div>
-
-                <div className="font-Satoshi font-400 text-[15.15px] text-[#F8F7FC] p-[10.82px] mt-[20px] leading-[150%]">
-                  Mercury stations retrograde at 10:48 PM. Saturn-Neptune
-                  conjunction ripple still active at 0° Aries. Positions opened
-                  this week face review pressure, historical data shows 9.4%
-                  underperformance when initiating during Rx stations in mutable
-                  signs.
-                </div>
-
-                <Link
-                  href="/insights"
-                  className="flex justify-end gap-2 text-white font-Satoshi text-[11.8px] italic leading-[150%] mt-[42px] mb-[30px]"
+             rounded-[12.986px] 
+             bg-[#151B3066] flex
+              justify-center
+              items-center
+              p-[21.643px_17.314px] 
+              gap-[10.822px]          
+              flex-[1_0_0] "
+            >
+              <div className="flex flex-col items-start gap-[17.314px] flex-[1_0_0]">
+                {/* Title */}
+                <span
+                  className="
+                font-Satoshi 
+                text-[12.986px] 
+                font-medium 
+                leading-[1.4] 
+                tracking-[0.003px] 
+                text-[#7A849A] 
+               "
+                  style={
+                    {
+                      leadingTrim: "both", // advanced typography
+                      textEdge: "cap", // advanced typography
+                    } as any
+                  }
                 >
-                  <span className="underline">Performance Intelligence →</span>
-                </Link>
+                  {item.title}
+                </span>
 
-                <hr className="w-full h-0 border-[1.08px] border-[#6C8BA41A] opacity-100 mb-4" />
+                {/* Value */}
+                <span
+                  className="
+                      font-Satoshi
+                      text-[21.643px]
+                      font-semibold         
+                      leading-[1.4]
+                      text-[#F8F7FC]
+                    "
+                  style={
+                    {
+                      color:
+                        item.title === "24h Change" ? "#7DD3C0" : "#F8F7FC",
+                      leadingTrim: "both",
+                      textEdge: "cap",
+                      fontVariantNumeric: "lining-nums tabular-nums",
+                    } as any
+                  }
+                >
+                  {item.value}
+                </span>
+              </div>
+            </div>
+          ))}
+        </div>
 
-                <div
-                  className="w-[342px] h-[30.64px] 
+        <div className="flex py-[10.822px] justify-center items-center gap-[8.657px] self-stretch">
+          <PortfolioChart data={data?.chartData} />
+        </div>
+
+        <div
+          className="font-Satoshi font-normal text-[15.15px] text-[#F8F7FC] p-[10.82px] leading-[150%]"
+          style={
+            {
+              leadingTrim: "both",
+              textEdge: "cap",
+            } as any
+          }
+        >
+          Mercury stations retrograde at 10:48 PM. Saturn-Neptune conjunction
+          ripple still active at 0° Aries. Positions opened this week face
+          review pressure, historical data shows 9.4% underperformance when
+          initiating during Rx stations in mutable signs.
+        </div>
+
+        <Link
+          href="/insights"
+          className="w-full flex justify-end gap-2 text-white font-Satoshi text-[11.8px] italic leading-[150%] mt-[42px] mb-[30px]"
+        >
+          <span
+            className="
+    font-Satoshi
+    text-[11.803px]
+    italic
+    font-normal
+    leading-[1.5]
+    text-center
+    underline
+    text-[var(--Foundation-Lunar-Haze,#F8F7FC)]
+  "
+            style={
+              {
+                leadingTrim: "both",
+                textEdge: "cap",
+                textDecorationStyle: "solid",
+                textDecorationSkipInk: "auto",
+                textDecorationThickness: "auto",
+                textUnderlineOffset: "auto",
+                textUnderlinePosition: "from-font",
+              } as any
+            }
+          >
+            Performance Intelligence →
+          </span>
+        </Link>
+
+        <hr className="w-full h-0 border-[1.08px] border-[#6C8BA41A] opacity-100 mb-4" />
+
+        <div
+          className="w-[342px] h-[30.64px] 
              flex items-center gap-[8.66px]
              pt-[10.82px] pb-[10.82px]
              opacity-100 text-[12.99px] leading-[100%] font-Satoshi"
-                >
-                  Last updated: {data?.portfolio?.lastUpdated}
-                </div>
-              </div>
-            </div>
-          )}
+        >
+          Last updated: {data?.portfolio?.lastUpdated}
         </div>
       </div>
-    </div>
+    </>
   );
 }

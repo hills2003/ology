@@ -8,12 +8,11 @@ export default function GradientCard({ children }: GradientCardProps) {
   return (
     <div
       className="
-        w-95.5
-        h-72.25
+        w-full
         min-h-30
-        mt-12.5
-        flex flex-col items-center gap-4
-        pt-5 pb-5 px-5
+        h-[289px]
+        flex flex-col items-center justify-between gap-4!
+        py-5 px-5
         rounded-[20px]
         border
         backdrop-blur-[20px]

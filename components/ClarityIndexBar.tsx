@@ -29,42 +29,41 @@ const ClarityIndexBar = () => {
   const pointerColor = getPointerColor(valuePercent);
 
   return (
-    <div className="w-full max-w-md mx-auto">
-      {/* Card */}
-      <div className="p-6">
-        {/* Title */}
-        <h2 className="text-center text-white text-[20px] font-Recoleta font-regular mb-[40px] leading-[130%]">
-          Clarity Index
-        </h2>
+    <div className="flex flex-col justify-center items-center self-stretch gap-7.5">
+      {/* Title */}
+      <h2 className="text-center text-white text-[20px] font-Recoleta font-regular mb-[40px] leading-[130%]">
+        Clarity Index
+      </h2>
 
-        {/* Bar wrapper */}
-        <div className="relative">
-          {/* Indicator */}
+      {/* Bar wrapper */}
+      <div className="relative w-full flex flex-col self-stretch gap-6.5 justify-center items-center">
+        {/* Indicator */}
+        <div
+          className="absolute -top-6 flex items-center gap-2"
+          style={{
+            left: `${valuePercent}%`,
+            transform: "translateX(-50%)",
+          }}
+        >
+          {/* Marker */}
           <div
-            className="absolute -top-6 flex items-center gap-2"
-            style={{
-              left: `${valuePercent}%`,
-              transform: "translateX(-50%)",
-            }}
+            className="w-[4px] h-[16px] rounded"
+            style={{ backgroundColor: pointerColor }}
+          />
+
+          {/* Label */}
+          <span
+            className="text-sm font-medium whitespace-nowrap"
+            style={{ color: pointerColor }}
           >
-            {/* Marker */}
-            <div
-              className="w-[4px] h-[16px] rounded"
-              style={{ backgroundColor: pointerColor }}
-            />
+            {valuePercent - 4}–{valuePercent + 3}%
+          </span>
+        </div>
 
-            {/* Label */}
-            <span
-              className="text-sm font-medium whitespace-nowrap"
-              style={{ color: pointerColor }}
-            >
-              {valuePercent - 4}–{valuePercent + 3}%
-            </span>
-          </div>
-
-          {/* Gradient bar */}
+        {/* Gradient bar */}
+        <div className="flex justify-center">
           <div
-            className="w-full h-[15px] rounded-full"
+            className="w-[321px] h-[15px] rounded-full"
             style={{
               background: `linear-gradient(
                 270deg,
@@ -75,13 +74,13 @@ const ClarityIndexBar = () => {
               )`,
             }}
           />
+        </div>
 
-          {/* Bottom labels */}
-          <div className="font-satoshi text-[12px] font-medium flex justify-between text-xs text-white/60 mt-4 px-1 tracking-wide">
-            <span>REACTIVE</span>
-            <span>CAUTIOUS</span>
-            <span>ALIGNED</span>
-          </div>
+        {/* Bottom labels */}
+        <div className="w-full font-Satoshi text-[12px] font-normal flex justify-between text-white leading-[140%] tracking-wide">
+          <span>REACTIVE</span>
+          <span>CAUTIOUS</span>
+          <span>ALIGNED</span>
         </div>
       </div>
     </div>

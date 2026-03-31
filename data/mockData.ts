@@ -4,7 +4,7 @@ type ChartData = {
   value: number;
 };
 export const dashboardData = {
-  userName: "Christina",
+  userName: "Jordan",
   clarityIndex: 50,
   portfolio: {
     totalValue: 12500,

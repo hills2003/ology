@@ -88,7 +88,7 @@
   font-display: swap;
 }
 
-/* Satoshi Medium-Italic */
+/* Satoshi Regular */
 @font-face {
   font-family: "Satoshi";
   src: url("/fonts/Satoshi-Regular.woff2") format("woff2");
@@ -104,7 +104,6 @@ body {
   font-family: "Recoleta", "Satoshi", sans-serif; /* global font stack */
   background-color: #0d1220; /* dark background */
   color: white; /* default text color */
-  line-height: 1.5;
   min-height: 100vh;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -112,11 +111,11 @@ body {
 
 /* globals.css */
 .font-Satoshi {
-  font-family: "Satoshi", sans-serif;
+  font-family: "Satoshi";
 }
 
 .font-Recoleta {
-  font-family: "Recoleta", sans-serif;
+  font-family: "Recoleta";
 }
 /* 3. Default link styles */
 a {

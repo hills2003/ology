@@ -21,45 +21,74 @@ export default function Home() {
       <Header />
 
       {!data && <HomeSkeleton />}
-
       {data && (
-        <div className="flex flex-col  items-center">
-          <div className="px-5 md:px-8 pt-10">
-            <h1 className="text-[30px] text-center font-medium">
+        <div className="flex flex-col items-center px-2.5 pt-10 pb-20 self-stretch gap-12.5">
+          <div className="flex flex-col items-center justify-center gap-12.25">
+            <h1 className="text-[#F8F7FC] text-center font-Recoleta text-[30px] font-medium leading-[120%]">
               Good Morning {data.userName}.
             </h1>
           </div>
 
           <GradientCard>
-            <div className="flex flex-col h-full items-center justify-between">
-              <div className="text-center">
-                <h1 className="font-medium text-[20px]">
-                  {data?.alerts?.[0].title}
-                </h1>
+            <div className="flex flex-col h-full items-cen5ter justify-between">
+              <div className="flex min-h-14 py-2.5 px-5">
+                <div className="w-full flex flex-col gap-5 items-center justify-center">
+                  <h1
+                    className="
+                    font-Recoleta
+                    text-[1.25rem]
+                    font-normal
+                    leading-[130%]
+                    tracking-[-0.00025rem]
+                    text-[#F8F7FC]
+                  "
+                  >
+                    {data?.alerts?.[0].title}
+                  </h1>
 
-                <h3 className="font-satoshi font-medium text-[13px] text-[#E89B7F]">
-                  Today's Energy: Storm Phase
-                </h3>
+                  <h3
+                    className="
+                    font-Satoshi
+                    text-[13px]
+                    font-medium
+                    leading-[1.4]
+                    tracking-[0.52px]
+                    text-center
+                    capitalize
+                    text-[#E89B7F]
+                  "
+                  >
+                    Today's Energy: Storm Phase
+                  </h3>
+                </div>
               </div>
 
-              <p className="text-[#F8F7FC] text-[14px] font-satoshi font-normal leading-[150%] text-center">
+              <p className="text-[#F8F7FC] text-[14px] font-Satoshi font-normal leading-[150%] text-center  ">
                 {data?.alerts?.[0].description}
               </p>
 
-              <div className="flex justify-between items-center w-full">
+              <div className="flex py-2.5 px-7.5 justify-between items-center w-full self-stretch">
                 <button
                   className="
-        w-30.75
-        h-10.25
-        flex items-center justify-center gap-[12.72px]
+      
+        flex items-center justify-center gap-[12.721px]
         px-2.5 py-4
-        rounded-[10.18px]
+        rounded-[10.177px]
         border
         bg-[#E99C7A33]
         border-[#E89B7F33]
       
         font-satoshi
         font-medium text-[13px] text-[#E89B7F] leading-[140%]
+
+      
+    font-Satoshi
+ 
+    tracking-[0.52px]
+    text-center
+    capitalize
+    
+  
       "
                 >
                   Signal Amplified
@@ -67,9 +96,34 @@ export default function Home() {
 
                 <Link
                   href="/Insights"
-                  className="flex items-center gap-2 text-white font-satoshi"
+                  className="flex items-center justify-center gap-[6.233px] text-white font-satoshi w-auto py-[6.233px] px-[18.698px]"
                 >
-                  <span className="underline">View Full Insights →</span>
+                  <span
+                    className="
+                      font-Satoshi
+                      text-[10.907px]
+                      italic
+                      font-normal
+                      leading-normal
+                      text-center
+                      underline
+                      text-[#F8F7FC]
+                    "
+                    style={
+                      {
+                        // cast to any to allow unknown properties
+                        leadingTrim: "both",
+                        textEdge: "cap",
+                        textDecorationStyle: "solid",
+                        textDecorationSkipInk: "auto",
+                        textDecorationThickness: "auto",
+                        textUnderlineOffset: "auto",
+                        textUnderlinePosition: "from-font",
+                      } as any
+                    }
+                  >
+                    View Full Insights →
+                  </span>
                 </Link>
               </div>
             </div>

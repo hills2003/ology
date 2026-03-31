@@ -60,9 +60,9 @@ export default function Home() {
   ];
 
   return (
-    <header className="sticky top-0 z-50 w-full h-[72px] flex items-center bg-[#0d1220] border-b border-[#E8E9F31A]">
+    <header className="sticky top-0 z-50 w-full h-[70px] flex items-center self-stretch bg-[#0d1220] border-b border-[#E8E9F31A] px-5">
       {/* Inner container aligns content with body */}
-      <div className="flex items-center justify-between w-full max-w-7xl mx-auto px-5 md:px-8">
+      <div className="flex items-center justify-between w-full max-w-7xl mx-auto md:px-8">
         {/* Logo + Hamburger */}
         <div className="flex items-center gap-5">
           {/* Hamburger button for mobile */}
@@ -72,7 +72,7 @@ export default function Home() {
               className="focus:outline-none"
             >
               <svg
-                className="w-[18.87px] h-[18.87px] text-white"
+                className="w-[18.86px] h-[18.86px] text-white"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -89,7 +89,7 @@ export default function Home() {
           </div>
 
           {/* Logo */}
-          <div className="relative w-[66.98px] h-[27.91px]">
+          <div className="relative w-[4.18625rem] h-[1.744375rem]">
             <Image
               src="/ologyLogo.svg"
               alt="Logo"
@@ -99,23 +99,7 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Desktop menu */}
-        {/* <nav className="hidden md:flex space-x-6">
-          <a href="#" className="hover:text-gray-300">
-            Home
-          </a>
-          <a href="#" className="hover:text-gray-300">
-            About
-          </a>
-          <a href="#" className="hover:text-gray-300">
-            Services
-          </a>
-          <a href="#" className="hover:text-gray-300">
-            Contact
-          </a>
-        </nav> */}
-
-        <div className="relative w-[46px] h-[46px]">
+        <div className="relative w-11.5 h-11.5">
           <Image
             src="/images/user.png"
             alt="Logo"
