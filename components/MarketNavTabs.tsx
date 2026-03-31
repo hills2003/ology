@@ -42,7 +42,7 @@ export default function MarketNavTabs() {
             <button
               key={tab.id}
               className={` relative flex items-center justify-center
-                  w-[120px] h-[40px] px-[24px] py-[8px] gap-[8px]
+                  w-auto h-[40px] px-[24px] py-[8px] gap-[8px]
                   rounded-[16px] border  
                   ${
                     isActive
