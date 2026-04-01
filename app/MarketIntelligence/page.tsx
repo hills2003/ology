@@ -49,7 +49,7 @@ const MarketIntelligencePage: React.FC = () => {
     (asset: any) => asset.symbol === activeAsset,
   );
 
-  const SelectedData = selectedAsset.chart.map((v, idx) => ({
+  const SelectedData = selectedAsset.chart.map((v: number, idx: number) => ({
     value: v,
     name: `Point ${idx + 1}`,
   }));
@@ -271,8 +271,8 @@ const MarketIntelligencePage: React.FC = () => {
                             return (
                               <image
                                 href={imgSrc.src} // Use SVG <image> inside chart
-                                x={cx - 12} // center horizontally
-                                y={cy - 12} // center vertically
+                                x={(cx ?? 0) - 12} // fallback to 0 if undefined
+                                y={(cy ?? 0) - 12} // center vertically
                                 width={24}
                                 height={24}
                               />
