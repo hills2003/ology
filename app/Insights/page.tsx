@@ -128,11 +128,11 @@ const InsightsPage: React.FC = () => {
             </div>
 
             <div className="flex flex-col">
-              <h2 className="text-white font-satoshi text-[1.125rem] font-normal leading-normal">
+              <h2 className="text-white font-Satoshi text-[1.125rem] font-normal leading-normal">
                 {data?.author}
               </h2>
               <Link href="/">
-                <span className="text-[rgba(255,255,255,0.86)] font-satoshi text-[14px] italic font-normal leading-normal underline decoration-solid [text-decoration-skip-ink:none] decoration-[4%] underline-offset-[25%]">
+                <span className="text-[rgba(255,255,255,0.86)] font-Satoshi text-[14px] italic font-normal leading-normal underline decoration-solid [text-decoration-skip-ink:none] decoration-[4%] underline-offset-[25%]">
                   view investor profile →
                 </span>
               </Link>

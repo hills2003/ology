@@ -90,7 +90,7 @@ const GlassChartModal: FC<GlassChartModalProps> = ({
                 </ResponsiveContainer>
               )}
               {chartType === "radial" && (
-                <div className="w-full h-[150px] flex items-center justify-center">
+                <div className="w-full h-37.5 flex items-center justify-center">
                   <Gauge
                     width={150}
                     height={75} // half-circle
