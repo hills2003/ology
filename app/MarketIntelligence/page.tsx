@@ -11,10 +11,15 @@ import {
   XAxis,
   YAxis,
   Area,
+  Tooltip,
+  AreaChart,
 } from "recharts";
 import InsightsSkeleton from "@/components/InsightsSkeleton";
 import Image from "next/image";
 import MarketIntelligenceSkeleton from "@/components/MarketIntelligenceSkeleton";
+import BulbIcon from "@/public/bulb.svg";
+import MercuryIcon from "@/public/Mercury.svg";
+import MoonIcon from "@/public/Moon.svg";
 
 const MarketIntelligencePage: React.FC = () => {
   const [data, setData] = useState<any>(null);
@@ -43,6 +48,11 @@ const MarketIntelligencePage: React.FC = () => {
   const selectedAsset = data.assets.find(
     (asset: any) => asset.symbol === activeAsset,
   );
+
+  const SelectedData = selectedAsset.chart.map((v, idx) => ({
+    value: v,
+    name: `Point ${idx + 1}`,
+  }));
 
   return (
     <>
@@ -170,25 +180,12 @@ const MarketIntelligencePage: React.FC = () => {
                     </div>
                   </div>
 
-                  {/* Line Chart */}
                   <div className="w-full h-[220px] -ml-4">
                     <ResponsiveContainer width="100%" height="100%">
-                      <LineChart
-                        data={selectedAsset.chart.map(
-                          (v: number, idx: number) => ({
-                            value: v,
-                            name: `Point ${idx + 1}`,
-                          }),
-                        )}
+                      <AreaChart
+                        data={SelectedData}
                         margin={{ top: 10, right: 10, left: -10, bottom: 0 }}
                       >
-                        {/* Subtle Grid */}
-                        <CartesianGrid
-                          stroke="rgba(255,255,255,0.05)"
-                          vertical={false}
-                        />
-
-                        {/* Gradient for stroke */}
                         <defs>
                           <linearGradient
                             id="lineStroke"
@@ -201,7 +198,6 @@ const MarketIntelligencePage: React.FC = () => {
                             <stop offset="100%" stopColor="#fb7185" />
                           </linearGradient>
 
-                          {/* Area gradient */}
                           <linearGradient
                             id="areaGradient"
                             x1="0"
@@ -222,7 +218,11 @@ const MarketIntelligencePage: React.FC = () => {
                           </linearGradient>
                         </defs>
 
-                        {/* Hide axis lines */}
+                        <CartesianGrid
+                          stroke="rgba(255,255,255,0.05)"
+                          vertical={false}
+                        />
+
                         <XAxis
                           dataKey="name"
                           tick={{ fill: "#6b7280", fontSize: 11 }}
@@ -235,29 +235,60 @@ const MarketIntelligencePage: React.FC = () => {
                           tickLine={false}
                         />
 
-                        {/* Area (soft fill) */}
+                        <Tooltip
+                          contentStyle={{
+                            background: "#0d1220",
+                            border: "none",
+                            borderRadius: "8px",
+                            color: "#fff",
+                            fontSize: 12,
+                            padding: "8px",
+                          }}
+                          labelStyle={{ color: "#aaa", fontSize: 10 }}
+                          cursor={{
+                            stroke: "rgba(255,255,255,0.1)",
+                            strokeWidth: 2,
+                          }}
+                        />
+
+                        {/* AREA under the line with custom dots */}
                         <Area
                           type="monotone"
                           dataKey="value"
                           stroke="none"
                           fill="url(#areaGradient)"
+                          isAnimationActive={false}
+                          dot={({ cx, cy, index }) => {
+                            const highlightPoints: any = {
+                              1: MoonIcon,
+                              4: MercuryIcon,
+                              6: BulbIcon,
+                            };
+
+                            const imgSrc = highlightPoints[index];
+                            if (!imgSrc) return null;
+
+                            return (
+                              <image
+                                href={imgSrc.src} // Use SVG <image> inside chart
+                                x={cx - 12} // center horizontally
+                                y={cy - 12} // center vertically
+                                width={24}
+                                height={24}
+                              />
+                            );
+                          }}
                         />
 
-                        {/* Line */}
+                        {/* Line on top */}
                         <Line
                           type="monotone"
                           dataKey="value"
                           stroke="url(#lineStroke)"
                           strokeWidth={2.5}
-                          dot={false}
-                          activeDot={{
-                            r: 6,
-                            stroke: "#fff",
-                            strokeWidth: 2,
-                            fill: "#fb7185",
-                          }}
+                          dot={false} // no default dots
                         />
-                      </LineChart>
+                      </AreaChart>
                     </ResponsiveContainer>
                   </div>
                 </div>
