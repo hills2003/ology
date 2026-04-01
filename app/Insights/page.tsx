@@ -134,7 +134,7 @@ const InsightsPage: React.FC = () => {
               Trading Power Windows
             </h3>
             <p
-              className="font-Satoshi font-normal text-[14px] text-[#F8F7FC] leading-[140%] text-center"
+              className="font-Satoshi font-normal text-[14px] text-[#F8F7FC] leading-[140%] text-center -mt-[20px]"
               style={
                 {
                   leadingTrim: "both",
