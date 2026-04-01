@@ -112,7 +112,7 @@ const MarketIntelligencePage: React.FC = () => {
                 },
               ).format(selectedAsset?.price)}`}</h1>
               <div
-                className="flex gap-[8.034px] pb-[3.213px] justify-center items-center text-(--Psychology-Impulse,#D66B7E) font-satoshi text-[16.067px] font-bold leading-[1.2] tracking-[0.005px] [font-variant-numeric:lining-nums_tabular-nums]"
+                className="flex gap-[8.034px] pb-[3.213px] justify-center items-center text-[#D66B7E] font-Satoshi text-[16.067px] font-bold leading-[1.2] tracking-[0.005px] -mt-3 [font-variant-numeric:lining-nums_tabular-nums]"
                 style={
                   {
                     leadingTrim: "both",
