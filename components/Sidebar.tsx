@@ -24,7 +24,7 @@ export default function Sidebar() {
   ];
 
   return (
-    <nav className="bg-[#0d1220] w-full h-screen pt-10 pb-10 flex flex-col justify-between items-start">
+    <nav className="bg-[#0d1220] w-full h-screen pt-10 pb-[50px] flex flex-col justify-between items-start">
       {/* Top Section */}
       <div className="flex flex-col w-full">
         <h1 className="underline text-[14.27px] font-Recoleta leading-[130%] font-normal px-[26px] text-[#F8F7FC] tracking-[0.06em]">

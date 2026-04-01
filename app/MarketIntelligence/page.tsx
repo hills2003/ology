@@ -147,7 +147,7 @@ const MarketIntelligencePage: React.FC = () => {
                       </p>
                     </div>
 
-                    <div className="flex flex-col items-end gap-1">
+                    <div className="flex flex-col items-end gap-1 ">
                       {/* Dropdown */}
                       <div className="relative text-[#F8F7FC] text-right font-poppins text-[12.698px] font-medium leading-normal flex justify-end">
                         <select
@@ -155,7 +155,7 @@ const MarketIntelligencePage: React.FC = () => {
                           onChange={(e) => setRange(e.target.value)}
                           className="appearance-none rounded-lg px-3 py-1 pr-7 focus:outline-none"
                         >
-                          <option>Today</option>
+                          <option>Today </option>
                           <option>Last Week</option>
                           <option>Last Month</option>
                           <option>3 Months</option>
@@ -163,7 +163,7 @@ const MarketIntelligencePage: React.FC = () => {
                         </select>
 
                         {/* Down arrow */}
-                        <span className="pointer-events-none absolute right-2 top-1/2 -translate-y-1/2 text-gray-400 text-xs">
+                        <span className="pointer-events-none absolute top-1/2 -translate-y-1/2 text-gray-400 text-xs">
                           ▼
                         </span>
                       </div>
