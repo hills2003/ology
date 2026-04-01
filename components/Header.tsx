@@ -66,7 +66,7 @@ export default function Home() {
         {/* Logo + Hamburger */}
         <div className="flex items-center gap-5">
           {/* Hamburger button for mobile */}
-          <div className="md:hidden flex items-center">
+          <div className="flex items-center">
             <button
               onClick={() => setMenuOpen(!menuOpen)}
               className="focus:outline-none"
@@ -112,21 +112,21 @@ export default function Home() {
       {/* Mobile menu */}
 
       {menuOpen && (
-        <nav className="md:hidden absolute left-0 top-16.25 z-50 flex h-[calc(100vh-65px)] w-full flex-col justify-between items-start bg-[#0d1220] pt-10 pb-12.5 shrink-0">
+        <nav className="absolute left-0 top-16.25 z-50 flex h-[calc(100vh-65px)] w-full flex-col justify-between items-start bg-[#0d1220] pt-10 pb-12.5 shrink-0">
           <div className="inline-flex flex-col items-start pl-[26.422px] gap-[13.211px]">
             <h1 className="text-[#F8F7FC] text-center font-Recoleta text-[18.269px] font-normal leading-[130%] tracking-[1.096px] underline underline-offset-[23%]">
               Thursday, February 26
             </h1>
           </div>
 
-          <div className="flex flex-col items-start gap-7.25 -mt-12">
+          <div className="flex flex-col items-start gap-7.25">
             <div className="flex flex-col justify-center items-start gap-[48.95px]">
               {menuItems &&
                 menuItems.map((item) => {
                   return (
                     <Link
                       href={item?.to}
-                      className="flex items-center gap-[14.567px] uppercase"
+                      className="flex items-center gap-[14.567px] uppercase opacity-[0.83]"
                     >
                       <div className="relative w-[66.98px] h-[27.91px]">
                         <Image
@@ -137,7 +137,16 @@ export default function Home() {
                         />
                       </div>
 
-                      <h2 className="text-[#f8f7fcc2] -ml-4 font-Satoshi text-[18.017px] font-bold leading-[140%] tracking-[1.621px] tabular-nums lining-nums">
+                      <h2
+                        className="text-[#F8F7FC] -ml-4 font-Satoshi text-[1.125rem] font-bold leading-[140%] tracking-[0.101rem] tabular-nums lining-nums"
+                        style={
+                          {
+                            WebkitLeadingTrim: "both",
+                            leadingTrim: "both",
+                            textEdge: "cap",
+                          } as any
+                        }
+                      >
                         {item?.name}
                       </h2>
                     </Link>
