@@ -24,59 +24,72 @@ export default function Sidebar() {
   ];
 
   return (
-    <nav className="bg-[#0d1220] w-full h-screen pt-10 pb-[50px] flex flex-col justify-between items-start">
-      {/* Top Section */}
-      <div className="flex flex-col w-full">
-        <h1 className="underline text-[14.27px] font-Recoleta leading-[130%] font-normal px-[26px] text-[#F8F7FC] tracking-[0.06em]">
+    <nav className="absolute left-0 top-16.25 z-50 flex h-[calc(100vh-65px)] w-full flex-col justify-between items-start bg-[#0d1220] pt-10 pb-12.5 shrink-0">
+      <div className="inline-flex flex-col items-start pl-[26.422px] gap-[13.211px]">
+        <h1 className="text-[#F8F7FC] text-center font-Recoleta text-[18.269px] font-normal leading-[130%] tracking-[1.096px] underline underline-offset-[23%]">
           Thursday, February 26
         </h1>
+      </div>
 
-        <div className="flex flex-col mt-[60px] h-[355px] justify-between px-[20px]">
-          {menuItems.map((item) => (
-            <Link
-              key={item.name}
-              href={item.to}
-              className="flex justify-start items-center gap-[14.57px]"
-            >
-              <div className="relative w-[40.98px] h-[18.91px]">
-                <Image
-                  src={item.logo}
-                  alt={item.name}
-                  fill
-                  className="object-contain"
-                />
-              </div>
+      <div className="flex flex-col items-start gap-7.25">
+        <div className="flex flex-col justify-center items-start gap-[48.95px]">
+          {menuItems &&
+            menuItems.map((item) => {
+              return (
+                <Link
+                  href={item?.to}
+                  className="flex items-center gap-[14.567px] uppercase opacity-[0.83]"
+                >
+                  <div className="relative w-[66.98px] h-[27.91px]">
+                    <Image
+                      src={item.logo}
+                      alt={item.name}
+                      fill
+                      className="object-contain"
+                    />
+                  </div>
 
-              <h2 className="leading-[140%] font-Satoshi font-bold text-[14.02px] text-[#F8F7FC] uppercase tracking-[0.09em]">
-                {item.name}
-              </h2>
-            </Link>
-          ))}
+                  <h2
+                    className="text-[#F8F7FC] -ml-4 font-Satoshi text-[1.125rem] font-bold leading-[140%] tracking-[0.101rem] tabular-nums lining-nums"
+                    style={
+                      {
+                        WebkitLeadingTrim: "both",
+                        leadingTrim: "both",
+                        textEdge: "cap",
+                      } as any
+                    }
+                  >
+                    {item?.name}
+                  </h2>
+                </Link>
+              );
+            })}
         </div>
       </div>
 
-      {/* Bottom Section */}
-      <div className="flex flex-col h-[75px] w-full items-end justify-between px-[20px] text-[#F8F7FC66]">
-        <Link
-          href="/"
-          className="font-Satoshi text-[14px] font-medium leading-[140%] tracking-[0.02em]"
-        >
-          Profile
-        </Link>
+      <div className="flex h-18.75 px-5 flex-col justify-between items-end shrink-0 self-stretch">
+        <div className="flex flex-col h-18.75 w-full items-end justify-between text-[#F8F7FC66]">
+          <Link
+            href="/"
+            className="text-[#F8F7FC66] font-Satoshi text-[12px] font-medium leading-[140%] tracking-[0.02em]"
+          >
+            Profile
+          </Link>
 
-        <Link
-          href="/"
-          className="font-Satoshi text-[12px] font-medium leading-[140%] tracking-[0.02em]"
-        >
-          Support
-        </Link>
+          <Link
+            href="/"
+            className="text-[#F8F7FC66] font-Satoshi text-[12px] font-medium leading-[140%] tracking-[0.02em]"
+          >
+            Support
+          </Link>
 
-        <Link
-          href="https://ologyapp.com/"
-          className="font-Satoshi text-[12px] font-medium leading-[140%] tracking-[0.02em]"
-        >
-          ologyapp.com
-        </Link>
+          <Link
+            href="https://ologyapp.com/"
+            className="text-[#F8F7FC66] font-Satoshi text-[12px] font-medium leading-[140%] tracking-[0.02em]"
+          >
+            ologyapp.com
+          </Link>
+        </div>
       </div>
     </nav>
   );
