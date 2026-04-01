@@ -38,17 +38,61 @@ const InsightsPage: React.FC = () => {
 
   // Example chartData
   const chartData = [
-    { name: "9:30", value: 20, info: "Info for 9:30" },
-    { name: "10-11", value: 35, info: "Info for 10-11" },
-    { name: "11-12", value: 50, info: "Info for 11-12" },
-    { name: "12-1", value: 65, info: "Info for 12-1" },
-    { name: "1-2", value: 80, info: "Info for 1-2" },
-    { name: "2-3", value: 45, info: "Info for 2-3" },
+    {
+      name: "9:30",
+      value: 20,
+      title: "Market Open Dip",
+      subtitle: "Early sell-off pressure",
+      info: "Info for 9:30",
+    },
+    {
+      name: "10-11",
+      value: 35,
+      title: "Recovery Bounce",
+      subtitle: "Buyers stepping in",
+      info: "Info for 10-11",
+    },
+    {
+      name: "11-12",
+      value: 50,
+      title: "Midday Consolidation",
+      subtitle: "Low volatility range",
+      info: "Info for 11-12",
+    },
+    {
+      name: "12-1",
+      value: 65,
+      title: "Bullish Momentum",
+      subtitle: "Strong upward trend",
+      info: "Info for 12-1",
+    },
+    {
+      name: "1-2",
+      value: 80,
+      title: "Peak Activity",
+      subtitle: "High volume breakout",
+      info: "Info for 1-2",
+    },
+    {
+      name: "2-3",
+      value: 45,
+      title: "Profit Taking",
+      subtitle: "Traders locking gains",
+      info: "Info for 2-3",
+    },
   ];
 
   // Handler when a bar is clicked
   const handleBarClick = (data: any, index: number) => {
-    setSelectedBar({ ...data, index });
+    setSelectedBar((prev: any) => {
+      // if clicking the same bar → close it
+      if (prev && prev.index === index) {
+        return null;
+      }
+
+      // otherwise open new bar
+      return { ...data, index };
+    });
   };
 
   return (
@@ -152,58 +196,103 @@ const InsightsPage: React.FC = () => {
               Mercury stations retrograde at 6:48 AM. Energy compresses all day.
               Observe, don't initiate.
             </p>
+            <div className="w-full flex flex-col justify-center">
+              <div className="w-full min-h-[220px] h-auto rounded-[13px] flex flex-col justify-start items-start font-satoshi -ml-4 self-stretch gap-[21px]">
+                <ResponsiveContainer width="100%" height={220}>
+                  <BarChart data={chartData} barCategoryGap="25%">
+                    <CartesianGrid
+                      vertical={false}
+                      stroke="#6C8BA41A"
+                      strokeDasharray="3 3"
+                    />
+                    <XAxis
+                      dataKey="name"
+                      tick={{
+                        fill: "#FFFFFF4D",
+                        fontSize: 12,
+                        fontFamily: "Satoshi",
+                      }}
+                      axisLine={{ stroke: "#6C8BA41A" }}
+                      tickLine={false}
+                    />
+                    <YAxis
+                      tick={{
+                        fill: "#FFFFFF4D",
+                        fontSize: 12,
+                        fontFamily: "Satoshi",
+                      }}
+                      axisLine={{ stroke: "#6C8BA41A" }}
+                      tickLine={false}
+                      domain={[0, 100]}
+                      tickFormatter={(value) => `${value}%`}
+                    />
+                    <Tooltip
+                      contentStyle={{
+                        background: "#151B30",
+                        border: "none",
+                        borderRadius: "8px",
+                        color: "#F8F7FC",
+                      }}
+                      formatter={(value) => `${value}%`}
+                    />
+                    <Bar
+                      dataKey="value"
+                      fill="#A5C4D34D"
+                      radius={[5, 5, 0, 0]}
+                      barSize={38}
+                      isAnimationActive
+                      style={{ outline: "none" }}
+                      onClick={handleBarClick} // ← Make bars clickable
+                    />
+                  </BarChart>
+                </ResponsiveContainer>
 
-            <div className="w-full min-h-[220px] h-auto rounded-[13px] flex flex-col justify-start items-start font-satoshi -ml-4 self-stretch gap-[21px]">
-              <ResponsiveContainer width="100%" height={220}>
-                <BarChart data={chartData} barCategoryGap="25%">
-                  <CartesianGrid
-                    vertical={false}
-                    stroke="#6C8BA41A"
-                    strokeDasharray="3 3"
-                  />
-                  <XAxis
-                    dataKey="name"
-                    tick={{
-                      fill: "#FFFFFF4D",
-                      fontSize: 12,
-                      fontFamily: "Satoshi",
-                    }}
-                    axisLine={{ stroke: "#6C8BA41A" }}
-                    tickLine={false}
-                  />
-                  <YAxis
-                    tick={{
-                      fill: "#FFFFFF4D",
-                      fontSize: 12,
-                      fontFamily: "Satoshi",
-                    }}
-                    axisLine={{ stroke: "#6C8BA41A" }}
-                    tickLine={false}
-                    domain={[0, 100]}
-                    tickFormatter={(value) => `${value}%`}
-                  />
-                  <Tooltip
-                    contentStyle={{
-                      background: "#151B30",
-                      border: "none",
-                      borderRadius: "8px",
-                      color: "#F8F7FC",
-                    }}
-                    formatter={(value) => `${value}%`}
-                  />
-                  <Bar
-                    dataKey="value"
-                    fill="#A5C4D34D"
-                    radius={[5, 5, 0, 0]}
-                    barSize={38}
-                    isAnimationActive
-                    style={{ outline: "none" }}
-                    onClick={handleBarClick} // ← Make bars clickable
-                  />
-                </BarChart>
-              </ResponsiveContainer>
+                {/* Info panel shows when a bar is clicked */}
+              </div>
+              <div className="flex flex-col gap-5 items-center">
+                {selectedBar && (
+                  <motion.div
+                    key={selectedBar.index}
+                    initial={{ opacity: 0, y: -10 }} // slight move from top
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                    transition={{ duration: 0.8, ease: "easeOut" }}
+                    className="w-full flex flex-col justify-center items-center p-5 rounded-[10.779px] bg-[#7DAA9233]"
+                  >
+                    <div className="w-full flex flex-col items-center gap-5">
+                      <h2 className="text-[#F8F7FC] text-center font-Satoshi text-[11px] font-medium leading-[140%] tabular-nums">
+                        {`${selectedBar.name} AM`}
+                      </h2>
 
-              {/* Info panel shows when a bar is clicked */}
+                      <div className="flex flex-col items-center self-stretch gap-2.5">
+                        <div className="flex justify-center items-center self-stretch">
+                          <p className="text-[#F8F7FC] text-center font-Recoleta text-[16px] font-medium leading-[130%]">
+                            {selectedBar.title}
+                          </p>
+                        </div>
+
+                        <p className="text-[#F8F7FC] text-center font-Satoshi text-[14px] font-normal leading-[150%]">
+                          {selectedBar.subtitle}
+                        </p>
+                      </div>
+                    </div>
+                  </motion.div>
+                )}
+                <Link href="/MarketIntelligence">
+                  <button
+                    className={`
+           flex items-center justify-center
+           h-10 px-6 py-2 w-[113.67px]
+          rounded-2xl gap-2 border
+         bg-[#1E25404D] border-b border-[#C5D1E033]
+        `}
+                  >
+                    <p className="text-[#F8F7FC] text-center font-Satoshi text-[14px] font-bold leading-[1.5]">
+                      Market
+                    </p>
+                  </button>
+                </Link>
+              </div>
             </div>
           </div>
 
@@ -215,29 +304,3 @@ const InsightsPage: React.FC = () => {
 };
 
 export default InsightsPage;
-
-// <div className="w-full flex flex-col items-center">
-//               {selectedBar && (
-//                 <div
-//                   key={selectedBar.index}
-//                   className="w-[361px] flex flex-col items-center gap-2 rounded-[16px] bg-[#215553] p-4 text-white"
-//                 >
-//                   <p className="text-xs font-bold">{selectedBar.name}</p>
-//                   <p className="text-sm font-semibold">{selectedBar.title}</p>
-//                   <p className="text-xs text-white/70">
-//                     {selectedBar.subtitle}
-//                   </p>
-//                   <button
-//                     className="mt-3 px-4 py-2 bg-pink-500 rounded-[16px] text-xs font-bold"
-//                     onClick={() => setSelectedBar(null)}
-//                   >
-//                     Close
-//                   </button>
-//                 </div>
-//               )}
-
-//               {/* Permanent Markets Button */}
-//               <button className="w-[361px] px-4 py-3 bg-[#0d1220] rounded-[16px] text-white font-bold font-Satoshi">
-//                 Markets
-//               </button>
-//             </div>
