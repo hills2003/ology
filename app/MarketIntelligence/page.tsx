@@ -21,12 +21,51 @@ import BulbIcon from "@/public/bulb.svg";
 import MercuryIcon from "@/public/Mercury.svg";
 import MoonIcon from "@/public/Moon.svg";
 import { motion, AnimatePresence } from "framer-motion";
+import GlassChartModal from "@/components/GlassChartModal";
 
 const MarketIntelligencePage: React.FC = () => {
   const [data, setData] = useState<any>(null);
   const [activeAsset, setActiveAsset] = useState<string | null>(null);
   const [selectedBar, setSelectedBar] = useState<any>(null);
   const [range, setRange] = useState("Today");
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const assets = [
+    {
+      name: "Sentiment",
+      chartType: "radial",
+      chartColor: "#7FA8D4",
+      bgColor: "rgba(127, 168, 212, 0.15)",
+      borderColor: "#A8CCF3",
+    },
+    {
+      name: "Volatility",
+      chartType: "bar",
+      chartColor: "#d66b7e",
+      bgColor: "rgba(214, 107, 126, 0.07)",
+      borderColor: "#D66B7E",
+    },
+    {
+      name: "Edge",
+      chartType: "radial",
+      chartColor: "#7daa92",
+      bgColor: "rgba(125, 170, 146, 0.1)",
+      borderColor: "#7DAA92",
+    },
+  ];
+
+  const [modalProps, setModalProps] = useState<any>({
+    chartType: "bar",
+    chartColor: "#7FA8D4",
+    bgColor: "rgba(127,168,212,0.15)",
+  });
+
+  const openModal = (assetName: string) => {
+    const config = assets.find((a) => a.name === assetName);
+    if (config) {
+      setModalProps(config);
+      setIsModalOpen(true);
+    }
+  };
 
   useEffect(() => {
     fetchMarketData().then((res) => {
@@ -351,10 +390,11 @@ const MarketIntelligencePage: React.FC = () => {
         </section>
 
         <div className="flex w-full justify-between items-center p-0.5 self-stretch">
-          {["Sentiment", "Volatility", "Edge"].map((asset: any) => {
+          {assets.map((asset: any) => {
             return (
               <button
-                key={asset}
+                onClick={() => openModal(asset.name)}
+                key={asset?.name}
                 className={`
            flex items-center justify-center
            h-10 px-6 py-2 w-[113.67px]
@@ -363,7 +403,7 @@ const MarketIntelligencePage: React.FC = () => {
         `}
               >
                 <p className="text-[#F8F7FC] text-center font-Satoshi text-[14px] font-bold leading-[1.5]">
-                  {asset}
+                  {asset?.name}
                 </p>
               </button>
             );
@@ -402,6 +442,26 @@ const MarketIntelligencePage: React.FC = () => {
           </div>
         </div>
       </main>
+
+      <GlassChartModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        borderColor={modalProps.borderColor} // optional: custom border
+        chartType={modalProps.chartType}
+        chartColor={modalProps.chartColor}
+        bgColor={modalProps.bgColor}
+        chartData={[
+          { name: "Today", value: 82 },
+          { name: "Today", value: 64 },
+          { name: "Yesterday", value: 12 },
+          { name: "tomorrow", value: 32 },
+          { name: "Today", value: 12 },
+          { name: "Today", value: 56 },
+        ]} // chart data
+        title="NVDA Long Position"
+        subtitle="High Conviction Trade"
+        description="Mercury retrograde stations today. Clarity drops but your Warden edge holds. Watch for false breakout, position after Feb 28 when Mercury conjuncts Venus."
+      />
     </>
   );
 };
