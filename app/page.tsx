@@ -67,7 +67,7 @@ export default function Home() {
                 {data?.alerts?.[0].description}
               </p>
 
-              <div className="flex py-2.5 px-7.5 justify-between items-center w-full self-stretch">
+              <div className="flex py-2.5 px-5 justify-between items-center w-full self-stretch mt-2">
                 <button
                   className="
       

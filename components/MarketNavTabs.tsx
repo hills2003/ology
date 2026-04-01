@@ -44,7 +44,9 @@ export default function MarketNavTabs() {
           return (
             <button
               key={tab.id}
-              onClick={() => setIsOpen(true)}
+              onClick={
+                tab.label === "Markets" ? () => setIsOpen(true) : undefined
+              }
               className={` relative flex items-center justify-center
                   w-auto h-[40px] px-[24px] py-[8px] gap-[8px]
                   rounded-[16px] border  

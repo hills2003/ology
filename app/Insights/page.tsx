@@ -15,9 +15,11 @@ import {
   Tooltip,
 } from "recharts";
 import InsightsSkeleton from "@/components/InsightsSkeleton";
+import { motion, AnimatePresence } from "framer-motion";
 
 const InsightsPage: React.FC = () => {
   const [data, setData] = useState<any>(null);
+  const [selectedBar, setSelectedBar] = useState<any>(null);
 
   useEffect(() => {
     fetchInsightsData().then((res) => setData(res));
@@ -36,13 +38,18 @@ const InsightsPage: React.FC = () => {
 
   // Example chartData
   const chartData = [
-    { name: "9:30", value: 20 },
-    { name: "10-11", value: 35 },
-    { name: "11-12", value: 50 },
-    { name: "12-1", value: 65 },
-    { name: "1-2", value: 80 },
-    { name: "2-3", value: 45 },
+    { name: "9:30", value: 20, info: "Info for 9:30" },
+    { name: "10-11", value: 35, info: "Info for 10-11" },
+    { name: "11-12", value: 50, info: "Info for 11-12" },
+    { name: "12-1", value: 65, info: "Info for 12-1" },
+    { name: "1-2", value: 80, info: "Info for 1-2" },
+    { name: "2-3", value: 45, info: "Info for 2-3" },
   ];
+
+  // Handler when a bar is clicked
+  const handleBarClick = (data: any, index: number) => {
+    setSelectedBar({ ...data, index });
+  };
 
   return (
     <>
@@ -146,7 +153,7 @@ const InsightsPage: React.FC = () => {
               Observe, don't initiate.
             </p>
 
-            <div className="w-full h-64.5 rounded-[13px] flex flex-col justify-center items-start font-Satoshi -ml-4 self-stretch gap-5.25">
+            <div className="w-full min-h-[220px] h-auto rounded-[13px] flex flex-col justify-start items-start font-satoshi -ml-4 self-stretch gap-[21px]">
               <ResponsiveContainer width="100%" height={220}>
                 <BarChart data={chartData} barCategoryGap="25%">
                   <CartesianGrid
@@ -164,7 +171,6 @@ const InsightsPage: React.FC = () => {
                     axisLine={{ stroke: "#6C8BA41A" }}
                     tickLine={false}
                   />
-
                   <YAxis
                     tick={{
                       fill: "#FFFFFF4D",
@@ -191,9 +197,13 @@ const InsightsPage: React.FC = () => {
                     radius={[5, 5, 0, 0]}
                     barSize={38}
                     isAnimationActive
+                    style={{ outline: "none" }}
+                    onClick={handleBarClick} // ← Make bars clickable
                   />
                 </BarChart>
               </ResponsiveContainer>
+
+              {/* Info panel shows when a bar is clicked */}
             </div>
           </div>
 
@@ -205,3 +215,29 @@ const InsightsPage: React.FC = () => {
 };
 
 export default InsightsPage;
+
+// <div className="w-full flex flex-col items-center">
+//               {selectedBar && (
+//                 <div
+//                   key={selectedBar.index}
+//                   className="w-[361px] flex flex-col items-center gap-2 rounded-[16px] bg-[#215553] p-4 text-white"
+//                 >
+//                   <p className="text-xs font-bold">{selectedBar.name}</p>
+//                   <p className="text-sm font-semibold">{selectedBar.title}</p>
+//                   <p className="text-xs text-white/70">
+//                     {selectedBar.subtitle}
+//                   </p>
+//                   <button
+//                     className="mt-3 px-4 py-2 bg-pink-500 rounded-[16px] text-xs font-bold"
+//                     onClick={() => setSelectedBar(null)}
+//                   >
+//                     Close
+//                   </button>
+//                 </div>
+//               )}
+
+//               {/* Permanent Markets Button */}
+//               <button className="w-[361px] px-4 py-3 bg-[#0d1220] rounded-[16px] text-white font-bold font-Satoshi">
+//                 Markets
+//               </button>
+//             </div>
