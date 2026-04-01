@@ -19,7 +19,7 @@ const GlassModal: FC<GlassModalProps> = ({ isOpen, onClose }) => {
         // Backdrop
         <motion.div
           key="backdrop"
-          className="fixed inset-0 bg-[#0d1220]/50 flex justify-center items-center z-50"
+          className="fixed inset-0 bg-[#0d1220]/70 flex justify-center items-center z-50"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
