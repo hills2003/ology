@@ -20,11 +20,12 @@ import MarketIntelligenceSkeleton from "@/components/MarketIntelligenceSkeleton"
 import BulbIcon from "@/public/bulb.svg";
 import MercuryIcon from "@/public/Mercury.svg";
 import MoonIcon from "@/public/Moon.svg";
+import { motion, AnimatePresence } from "framer-motion";
 
 const MarketIntelligencePage: React.FC = () => {
   const [data, setData] = useState<any>(null);
   const [activeAsset, setActiveAsset] = useState<string | null>(null);
-
+  const [selectedBar, setSelectedBar] = useState<any>(null);
   const [range, setRange] = useState("Today");
 
   useEffect(() => {
@@ -53,6 +54,15 @@ const MarketIntelligencePage: React.FC = () => {
     value: v,
     name: `Point ${idx + 1}`,
   }));
+
+  const handlePointClick = (payload: any, index: number) => {
+    setSelectedBar((prev: any) => {
+      if (prev && prev.index === index) return null; // toggle off
+      return { ...payload, index }; // open new
+    });
+
+    console.log("logs", payload, index);
+  };
 
   return (
     <>
@@ -179,117 +189,160 @@ const MarketIntelligencePage: React.FC = () => {
                       </div>
                     </div>
                   </div>
+                  <div className="flex flex-col justify-center gap-5">
+                    <div className="w-full h-55 -ml-4">
+                      <ResponsiveContainer width="100%" height="100%">
+                        <AreaChart
+                          data={SelectedData}
+                          margin={{ top: 10, right: 10, left: -10, bottom: 0 }}
+                          style={{ pointerEvents: "all" }} // important
+                        >
+                          <defs>
+                            <linearGradient
+                              id="lineStroke"
+                              x1="0"
+                              y1="0"
+                              x2="1"
+                              y2="0"
+                            >
+                              <stop offset="0%" stopColor="#fca5a5" />
+                              <stop offset="100%" stopColor="#fb7185" />
+                            </linearGradient>
 
-                  <div className="w-full h-[220px] -ml-4">
-                    <ResponsiveContainer width="100%" height="100%">
-                      <AreaChart
-                        data={SelectedData}
-                        margin={{ top: 10, right: 10, left: -10, bottom: 0 }}
-                      >
-                        <defs>
-                          <linearGradient
-                            id="lineStroke"
-                            x1="0"
-                            y1="0"
-                            x2="1"
-                            y2="0"
-                          >
-                            <stop offset="0%" stopColor="#fca5a5" />
-                            <stop offset="100%" stopColor="#fb7185" />
-                          </linearGradient>
-
-                          <linearGradient
-                            id="areaGradient"
-                            x1="0"
-                            y1="0"
-                            x2="0"
-                            y2="1"
-                          >
-                            <stop
-                              offset="0%"
-                              stopColor="#fb7185"
-                              stopOpacity={0.25}
-                            />
-                            <stop
-                              offset="100%"
-                              stopColor="#fb7185"
-                              stopOpacity={0.02}
-                            />
-                          </linearGradient>
-                        </defs>
-
-                        <CartesianGrid
-                          stroke="rgba(255,255,255,0.05)"
-                          vertical={false}
-                        />
-
-                        <XAxis
-                          dataKey="name"
-                          tick={{ fill: "#6b7280", fontSize: 11 }}
-                          axisLine={false}
-                          tickLine={false}
-                        />
-                        <YAxis
-                          tick={{ fill: "#6b7280", fontSize: 11 }}
-                          axisLine={false}
-                          tickLine={false}
-                        />
-
-                        <Tooltip
-                          contentStyle={{
-                            background: "#0d1220",
-                            border: "none",
-                            borderRadius: "8px",
-                            color: "#fff",
-                            fontSize: 12,
-                            padding: "8px",
-                          }}
-                          labelStyle={{ color: "#aaa", fontSize: 10 }}
-                          cursor={{
-                            stroke: "rgba(255,255,255,0.1)",
-                            strokeWidth: 2,
-                          }}
-                        />
-
-                        {/* AREA under the line with custom dots */}
-                        <Area
-                          type="monotone"
-                          dataKey="value"
-                          stroke="none"
-                          fill="url(#areaGradient)"
-                          isAnimationActive={false}
-                          dot={({ cx, cy, index }) => {
-                            const highlightPoints: any = {
-                              1: MoonIcon,
-                              4: MercuryIcon,
-                              6: BulbIcon,
-                            };
-
-                            const imgSrc = highlightPoints[index];
-                            if (!imgSrc) return null;
-
-                            return (
-                              <image
-                                href={imgSrc.src} // Use SVG <image> inside chart
-                                x={(cx ?? 0) - 12} // fallback to 0 if undefined
-                                y={(cy ?? 0) - 12} // center vertically
-                                width={24}
-                                height={24}
+                            <linearGradient
+                              id="areaGradient"
+                              x1="0"
+                              y1="0"
+                              x2="0"
+                              y2="1"
+                            >
+                              <stop
+                                offset="0%"
+                                stopColor="#fb7185"
+                                stopOpacity={0.25}
                               />
-                            );
-                          }}
-                        />
+                              <stop
+                                offset="100%"
+                                stopColor="#fb7185"
+                                stopOpacity={0.02}
+                              />
+                            </linearGradient>
+                          </defs>
 
-                        {/* Line on top */}
-                        <Line
-                          type="monotone"
-                          dataKey="value"
-                          stroke="url(#lineStroke)"
-                          strokeWidth={2.5}
-                          dot={false} // no default dots
-                        />
-                      </AreaChart>
-                    </ResponsiveContainer>
+                          <CartesianGrid
+                            stroke="rgba(255,255,255,0.05)"
+                            vertical={false}
+                          />
+
+                          <XAxis
+                            dataKey="name"
+                            tick={{ fill: "#6b7280", fontSize: 11 }}
+                            axisLine={false}
+                            tickLine={false}
+                          />
+                          <YAxis
+                            tick={{ fill: "#6b7280", fontSize: 11 }}
+                            axisLine={false}
+                            tickLine={false}
+                          />
+
+                          <Tooltip
+                            contentStyle={{
+                              background: "#0d1220",
+                              border: "none",
+                              borderRadius: "8px",
+                              color: "#fff",
+                              fontSize: 12,
+                              padding: "8px",
+                            }}
+                            labelStyle={{ color: "#aaa", fontSize: 10 }}
+                            cursor={{
+                              stroke: "rgba(255,255,255,0.1)",
+                              strokeWidth: 2,
+                            }}
+                          />
+
+                          {/* AREA under the line with custom dots */}
+                          <Area
+                            type="monotone"
+                            dataKey="value"
+                            stroke="none"
+                            fill="url(#areaGradient)"
+                            isAnimationActive={false}
+                            dot={({ cx, cy, index, payload }) => {
+                              const highlightPoints: any = {
+                                1: MoonIcon,
+                                4: MercuryIcon,
+                                6: BulbIcon,
+                              };
+
+                              const imgSrc = highlightPoints[index];
+                              if (!imgSrc) return null;
+
+                              return (
+                                <image
+                                  href={imgSrc.src}
+                                  x={(cx ?? 0) - 12}
+                                  y={(cy ?? 0) - 12}
+                                  width={24}
+                                  height={24}
+                                  style={{
+                                    cursor: "pointer",
+                                    pointerEvents: "auto",
+                                  }}
+                                  onClick={(e) => {
+                                    e.stopPropagation(); // prevent chart conflicts
+                                    handlePointClick(payload, index);
+                                  }}
+                                />
+                              );
+                            }}
+                          />
+
+                          {/* Line on top */}
+                          <Line
+                            type="monotone"
+                            dataKey="value"
+                            stroke="url(#lineStroke)"
+                            strokeWidth={2.5}
+                            dot={false}
+                          />
+                        </AreaChart>
+                      </ResponsiveContainer>
+                    </div>
+
+                    <AnimatePresence mode="wait">
+                      {selectedBar && (
+                        <motion.div
+                          key={selectedBar.index}
+                          initial={{ opacity: 0, y: -10 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, y: -10 }}
+                          transition={{ duration: 0.3, ease: "easeOut" }}
+                          className="w-full flex flex-col justify-center items-center p-4 rounded-[10.779px] bg-[#1E25404D]"
+                        >
+                          <div className="w-full flex justify-between items-start gap-5">
+                            <div className="flex flex-col gap-2">
+                              <h1 className="font-Satoshi font-medium leading-[130%] text-white text-[16px]">
+                                6:48 AM ET <em>.</em> Mercury Retrograde
+                              </h1>
+                              <p className="font-Satoshi font-normal text-[14px] text-[#e8e8e8]">
+                                Sell-the-news trigger on NVDA earnings.
+                              </p>
+                            </div>
+
+                            <div className="relative w-[18px] h-[18px]">
+                              <Image
+                                src={BulbIcon}
+                                alt="Logo"
+                                fill
+                                className="object-contain"
+                              />
+                            </div>
+                          </div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
                   </div>
                 </div>
               )}
