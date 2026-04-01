@@ -243,7 +243,7 @@ export default function MarketNavTabs() {
         </div>
 
         <Link
-          href="/insights"
+          href="/"
           className="w-full flex justify-end gap-2 text-white font-Satoshi text-[11.8px] italic leading-[150%] mt-[42px] mb-[30px]"
         >
           <span

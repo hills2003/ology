@@ -36,12 +36,12 @@ const InsightsPage: React.FC = () => {
 
   // Example chartData
   const chartData = [
-    { name: "Jan", value: 40 },
-    { name: "Feb", value: 70 },
-    { name: "Mar", value: 30 },
-    { name: "Apr", value: 90 },
-    { name: "May", value: 60 },
-    { name: "Jun", value: 50 },
+    { name: "9:30", value: 20 },
+    { name: "10-11", value: 35 },
+    { name: "11-12", value: 50 },
+    { name: "12-1", value: 65 },
+    { name: "1-2", value: 80 },
+    { name: "2-3", value: 45 },
   ];
 
   return (
@@ -146,24 +146,35 @@ const InsightsPage: React.FC = () => {
               Observe, don't initiate.
             </p>
 
-            <div className="w-full h-64.5 rounded-[13px] flex flex-col justify-center items-start -ml-4 self-stretch gap-5.25">
-              <ResponsiveContainer width="100%" height="100%">
+            <div className="w-full h-64.5 rounded-[13px] flex flex-col justify-center items-start font-Satoshi -ml-4 self-stretch gap-5.25">
+              <ResponsiveContainer width="100%" height={220}>
                 <BarChart data={chartData} barCategoryGap="25%">
-                  <XAxis
-                    dataKey="name"
-                    tick={{ fill: "#FFFFFF4D", fontSize: 12 }}
-                    axisLine={{ stroke: "#6C8BA41A" }}
-                    tickLine={false}
-                  />
-                  <YAxis
-                    tick={{ fill: "#FFFFFF4D", fontSize: 12 }}
-                    axisLine={{ stroke: "#6C8BA41A" }}
-                    tickLine={false}
-                  />
                   <CartesianGrid
                     vertical={false}
                     stroke="#6C8BA41A"
                     strokeDasharray="3 3"
+                  />
+                  <XAxis
+                    dataKey="name"
+                    tick={{
+                      fill: "#FFFFFF4D",
+                      fontSize: 12,
+                      fontFamily: "Satoshi",
+                    }}
+                    axisLine={{ stroke: "#6C8BA41A" }}
+                    tickLine={false}
+                  />
+
+                  <YAxis
+                    tick={{
+                      fill: "#FFFFFF4D",
+                      fontSize: 12,
+                      fontFamily: "Satoshi",
+                    }}
+                    axisLine={{ stroke: "#6C8BA41A" }}
+                    tickLine={false}
+                    domain={[0, 100]}
+                    tickFormatter={(value) => `${value}%`}
                   />
                   <Tooltip
                     contentStyle={{
@@ -172,6 +183,7 @@ const InsightsPage: React.FC = () => {
                       borderRadius: "8px",
                       color: "#F8F7FC",
                     }}
+                    formatter={(value) => `${value}%`}
                   />
                   <Bar
                     dataKey="value"

@@ -114,9 +114,11 @@ export default function Home() {
       {menuOpen && (
         <nav className="absolute left-0 top-16.25 z-50 flex h-[calc(100vh-65px)] w-full flex-col justify-between items-start bg-[#0d1220] pt-10 pb-12.5 shrink-0">
           <div className="inline-flex flex-col items-start pl-[26.422px] gap-[13.211px]">
-            <h1 className="text-[#F8F7FC] text-center font-Recoleta text-[18.269px] font-normal leading-[130%] tracking-[1.096px] underline underline-offset-[23%]">
-              Thursday, February 26
-            </h1>
+            <Link href="/Insights">
+              <h1 className="text-[#F8F7FC] text-center font-Recoleta text-[18.269px] font-normal leading-[130%] tracking-[1.096px] underline underline-offset-[23%]">
+                Thursday, February 26
+              </h1>
+            </Link>
           </div>
 
           <div className="flex flex-col items-start gap-7.25">

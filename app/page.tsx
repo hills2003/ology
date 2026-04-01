@@ -78,17 +78,17 @@ export default function Home() {
         bg-[#E99C7A33]
         border-[#E89B7F33]
       
-        font-satoshi
+        font-Satoshi
         font-medium text-[13px] text-[#E89B7F] leading-[140%]
 
       
-    font-Satoshi
- 
-    tracking-[0.52px]
-    text-center
-    capitalize
+        font-Satoshi
     
-  
+        tracking-[0.52px]
+        text-center
+        capitalize
+        
+      
       "
                 >
                   Signal Amplified
@@ -96,7 +96,7 @@ export default function Home() {
 
                 <Link
                   href="/Insights"
-                  className="flex items-center justify-center gap-[6.233px] text-white font-satoshi w-auto py-[6.233px] px-[18.698px]"
+                  className="flex items-center justify-center gap-[6.233px] text-white font-Satoshi w-auto py-[6.233px] px-[18.698px]"
                 >
                   <span
                     className="
@@ -122,7 +122,7 @@ export default function Home() {
                       } as any
                     }
                   >
-                    View Full Insights →
+                    View Full Insight →
                   </span>
                 </Link>
               </div>
