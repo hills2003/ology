@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import ClarityIndexBar from "./ClarityIndexBar";
 import { fetchDashboardData } from "@/data/api";
 import PortfolioChart from "./PortfolioChart";
+import GlassModal from "./GlassModal";
 
 type Tab = {
   label: string;
@@ -28,6 +29,8 @@ export default function MarketNavTabs() {
     fetchDashboardData().then((res) => setData(res));
   }, []);
 
+  const [isOpen, setIsOpen] = useState(false);
+
   return (
     <>
       <div className="flex gap-2.75 items-end  justify-center self-stretch relative">
@@ -41,6 +44,7 @@ export default function MarketNavTabs() {
           return (
             <button
               key={tab.id}
+              onClick={() => setIsOpen(true)}
               className={` relative flex items-center justify-center
                   w-auto h-[40px] px-[24px] py-[8px] gap-[8px]
                   rounded-[16px] border  
@@ -284,6 +288,8 @@ export default function MarketNavTabs() {
           Last updated: {data?.portfolio?.lastUpdated}
         </div>
       </div>
+
+      <GlassModal isOpen={isOpen} onClose={() => setIsOpen(false)} />
     </>
   );
 }
