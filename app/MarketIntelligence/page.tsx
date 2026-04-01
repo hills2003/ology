@@ -128,7 +128,7 @@ const MarketIntelligencePage: React.FC = () => {
                     className="object-contain"
                   />
                 </div>
-                <div>{selectedAsset?.change}</div>
+                <div>{`${selectedAsset?.change}%`}</div>
               </div>
             </div>
           </div>
