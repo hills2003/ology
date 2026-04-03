@@ -131,7 +131,7 @@ const InsightsPage: React.FC = () => {
               <h2 className="text-white font-Satoshi text-[1.125rem] font-normal leading-normal">
                 {data?.author}
               </h2>
-              <Link href="/">
+              <Link href="/Home">
                 <span className="text-[rgba(255,255,255,0.86)] font-Satoshi text-[14px] italic font-normal leading-normal underline decoration-solid [text-decoration-skip-ink:none] decoration-[4%] underline-offset-[25%]">
                   view investor profile →
                 </span>

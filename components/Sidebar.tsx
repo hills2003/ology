@@ -11,7 +11,7 @@ import intelligence from "../public/intelligence.svg";
 
 export default function Sidebar() {
   const menuItems = [
-    { logo: home, name: "Home", to: "/" },
+    { logo: home, name: "Home", to: "/Home" },
     {
       logo: intelligence,
       name: "Market Intelligence",
@@ -70,14 +70,14 @@ export default function Sidebar() {
       <div className="flex h-18.75 px-5 flex-col justify-between items-end shrink-0 self-stretch">
         <div className="flex flex-col h-18.75 w-full items-end justify-between text-[#F8F7FC66]">
           <Link
-            href="/"
+            href="/Home"
             className="text-[#F8F7FC66] font-Satoshi text-[12px] font-medium leading-[140%] tracking-[0.02em]"
           >
             Profile
           </Link>
 
           <Link
-            href="/"
+            href="/Home"
             className="text-[#F8F7FC66] font-Satoshi text-[12px] font-medium leading-[140%] tracking-[0.02em]"
           >
             Support
