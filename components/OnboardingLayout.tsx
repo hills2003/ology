@@ -49,7 +49,6 @@ export default function OnboardingLayout({
         </video>
       )}
 
-      {/* 🌑 Overlay */}
       {overlay && (
         <div className="fixed inset-0 bg-black/40 backdrop-blur-[2px] pointer-events-none" />
       )}
