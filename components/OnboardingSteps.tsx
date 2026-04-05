@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
 import ologyLogo from "@/public/ologyLogo.svg";
@@ -11,6 +11,10 @@ import neptune from "@/public/neptune.svg";
 import earth from "@/public/earth.svg";
 import Link from "next/link";
 import { Eye, EyeOff } from "lucide-react";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import TimePicker from "react-time-picker";
+import "react-time-picker/dist/TimePicker.css";
 
 type WrapperProps = {
   children: React.ReactNode;
@@ -177,23 +181,6 @@ const AccountSetup = ({ data, setData, onNext }: any) => {
           </div>
 
           <div className="w-full flex flex-col justify-center items-center self-stretch gap-4">
-            {/* <input
-              className="
-            py-4 px-5
-            w-full rounded-[10px] border border-[rgba(248,247,252,0.1)]
-            text-center
-            placeholder-text-[#F8F7FC] placeholder-font-Satoshi placeholder-text-[13px] placeholder-normal placeholder-tracking-[1.95px] placeholder-uppercase
-          "
-              style={
-                {
-                  leadingTrim: "both",
-                  textEdge: "cap",
-                } as any
-              }
-              placeholder="Enter Your Phone Number"
-              value={data.phone || ""}
-              onChange={(e) => setData({ ...data, phone: e.target.value })}
-            /> */}
             <input
               type="tel"
               inputMode="tel"
@@ -231,24 +218,6 @@ const AccountSetup = ({ data, setData, onNext }: any) => {
               value={data.username || ""}
               onChange={(e) => setData({ ...data, username: e.target.value })}
             />
-
-            {/* <input
-              className="
-            py-4 px-5
-            w-full rounded-[10px] border border-[rgba(248,247,252,0.1)]
-            text-center
-            placeholder-text-[#F8F7FC] placeholder-font-Satoshi placeholder-text-[13px] placeholder-normal placeholder-tracking-[1.95px] placeholder-uppercase
-          "
-              placeholder="Create Your Password"
-              style={
-                {
-                  leadingTrim: "both",
-                  textEdge: "cap",
-                } as any
-              }
-              value={data.password || ""}
-              onChange={(e) => setData({ ...data, password: e.target.value })}
-            /> */}
 
             <div className="relative w-full">
               <input
@@ -297,39 +266,23 @@ const AccountSetup = ({ data, setData, onNext }: any) => {
 
 const BirthDetails = ({ data, setData, onNext }: any) => {
   const canProceed = data.dob && data.time && data.location;
+  const [open, setOpen] = useState(false);
+  const [showInput, setShowInput] = useState(false);
+  const wrapperRef = useRef<HTMLDivElement>(null);
 
-  const formatDOB = (value: string) => {
-    let digits = value.replace(/\D/g, "").slice(0, 8);
-
-    let mm = digits.slice(0, 2);
-    let dd = digits.slice(2, 4);
-    let yyyy = digits.slice(4, 8);
-
-    if (mm && parseInt(mm) > 12) mm = "12";
-    if (dd && parseInt(dd) > 31) dd = "31";
-
-    if (digits.length <= 2) return mm;
-    if (digits.length <= 4) return `${mm} / ${dd}`;
-    return `${mm} / ${dd} / ${yyyy}`;
-  };
-
-  const formatTime = (value: string) => {
-    // Remove everything except digits
-    let digits = value.replace(/\D/g, "").slice(0, 4); // HHMM max
-
-    let hh = digits.slice(0, 2);
-    let mm = digits.slice(2, 4);
-
-    // Clamp hours and minutes
-    if (hh && parseInt(hh) > 12) hh = "12";
-    if (mm && parseInt(mm) > 59) mm = "59";
-
-    // Return formatted string
-    if (digits.length <= 2) return hh;
-    if (digits.length <= 4) return `${hh}:${mm} - `;
-    return `${hh}:${mm} - ${value.slice(-2).toUpperCase()}`; // keep AM/PM if user types it
-  };
-
+  // Optional: close input if clicked outside
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (
+        wrapperRef.current &&
+        !wrapperRef.current.contains(event.target as Node)
+      ) {
+        if (!data.time) setShowInput(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [data.time]);
   return (
     <div className="h-screen flex flex-col items-center">
       <div className="flex justify-between items-center pt-5 pr-5 pb-0 pl-5 shrink-0">
@@ -359,45 +312,74 @@ const BirthDetails = ({ data, setData, onNext }: any) => {
           </div>
 
           <div className="w-full flex flex-col justify-center items-center self-stretch gap-4">
-            <input
-              type="tel"
-              inputMode="numeric"
-              className="
-              py-4 px-5
-              w-full rounded-[10px] border border-[rgba(248,247,252,0.1)]
-              text-center text-white
-              placeholder:text-[#F8F7FC] placeholder:font-Satoshi placeholder:text-[13px] placeholder:tracking-[1.95px] placeholder:uppercase
-            "
-              placeholder="Date of Birth ( MM / DD / YYYY )"
-              value={data.dob || ""}
-              onChange={(e) => {
-                const formatted = formatDOB(e.target.value);
-                setData((prev: any) => ({
-                  ...prev,
-                  dob: formatted,
-                }));
-              }}
-            />
+            <div className="w-full rounded-[10px] border border-[rgba(248,247,252,0.1)]">
+              <div className=" flex flex-col gap-4">
+                <div
+                  className="
+          py-4 px-5 w-full rounded-[10px] border border-[rgba(248,247,252,0.1)]
+          text-center text-white font-Satoshi cursor-pointer
+          placeholder:text-[#F8F7FC] placeholder:font-Satoshi placeholder:text-[13px] placeholder-uppercase
+        "
+                  onClick={() => setOpen(true)}
+                >
+                  {data.dob
+                    ? data.dob.toLocaleDateString("en-US", {
+                        month: "2-digit",
+                        day: "2-digit",
+                        year: "numeric",
+                      })
+                    : "Date of Birth (MM/DD/YYYY)"}
+                </div>
 
-            <input
-              type="tel"
-              inputMode="numeric"
-              className="
-                py-4 px-5
-                w-full rounded-[10px] border border-[rgba(248,247,252,0.1)]
-                text-center text-white
-                placeholder:text-[#F8F7FC] placeholder:font-Satoshi placeholder:text-[13px] placeholder:tracking-[1.95px] placeholder:uppercase
-              "
-              placeholder="Time of Birth ( HH:MM - AM/PM )"
-              value={data.time || ""}
-              onChange={(e) => {
-                const formatted = formatTime(e.target.value);
-                setData((prev: any) => ({
-                  ...prev,
-                  time: formatted,
-                }));
-              }}
-            />
+                {/* Hidden DatePicker */}
+                {open && (
+                  <DatePicker
+                    selected={data.dob}
+                    onChange={(date: Date | null) => {
+                      setData({ dob: date });
+                      setOpen(false); // close after selecting
+                    }}
+                    inline
+                    className="text-center text-white font-Satoshi bg-[#0d1220]"
+                  />
+                )}
+              </div>
+            </div>
+
+            {/* Time of Birth */}
+            <div
+              className="relative w-full rounded-[10px] border border-[rgba(248,247,252,0.1)]"
+              ref={wrapperRef}
+            >
+              {/* Placeholder div */}
+              {!showInput && !data.time && (
+                <div
+                  className="
+            py-4 px-5 w-full text-center text-[#F8F7FC] font-Satoshi text-[13px] tracking-[1.95px] uppercase
+            cursor-text
+          "
+                  onClick={() => setShowInput(true)}
+                >
+                  Time of Birth (HH:MM - AM/PM)
+                </div>
+              )}
+
+              {/* Real input */}
+              {(showInput || data.time) && (
+                <input
+                  type="time"
+                  value={data.time || ""}
+                  onChange={(e) => setData({ ...data, time: e.target.value })}
+                  step={60}
+                  autoFocus
+                  className="
+      w-full h-12 text-center text-white font-Satoshi
+      bg-transparent border-none outline-none
+      py-0 px-24
+    "
+                />
+              )}
+            </div>
 
             <input
               className="
@@ -732,7 +714,7 @@ export default function OnboardingSteps({ Layout }: any) {
           transition={{ duration: 0.35 }}
         >
           {" "}
-          <Layout videoSrc={step.videoSrc}>
+          <Layout videoSrc={step.videoSrc} overlay centerContent={false}>
             <StepComponent
               data={data}
               setData={setData}

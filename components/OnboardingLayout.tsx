@@ -22,19 +22,17 @@ export default function OnboardingLayout({
     const video = videoRef.current;
     if (!video) return;
 
-    setLoaded(false); // reset while loading new video
+    setLoaded(false);
 
-    // Reload video when videoSrc changes
     video.load();
     const onLoad = () => setLoaded(true);
 
     video.addEventListener("loadeddata", onLoad);
-
     return () => video.removeEventListener("loadeddata", onLoad);
   }, [videoSrc]);
 
   return (
-    <div className="relative min-h-screen w-full overflow-hidden bg-[rgba(13,18,32,0.9)]">
+    <div className="relative w-full h-[100dvh] min-h-screen overflow-hidden bg-[rgba(13,18,32,0.9)]">
       {/* 🎥 Background Video */}
       {videoSrc && (
         <video
@@ -58,8 +56,10 @@ export default function OnboardingLayout({
 
       {/* 🧩 Content Layer */}
       <div
-        className={`relative z-10 min-h-screen w-full px-4 ${
-          centerContent ? "flex items-center justify-center" : "flex flex-col"
+        className={`relative z-10 w-full h-full overflow-auto px-4 ${
+          centerContent
+            ? "flex flex-col items-center justify-center"
+            : "flex flex-col"
         }`}
       >
         {children}
