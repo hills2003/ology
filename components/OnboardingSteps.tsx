@@ -10,6 +10,7 @@ import venus from "@/public/Venus.svg";
 import neptune from "@/public/neptune.svg";
 import earth from "@/public/earth.svg";
 import Link from "next/link";
+import { Eye, EyeOff } from "lucide-react";
 
 type WrapperProps = {
   children: React.ReactNode;
@@ -145,6 +146,8 @@ const AccountSetup = ({ data, setData, onNext }: any) => {
     data.password?.length >= 6 &&
     data.phone?.length > 6;
 
+  const [showPassword, setShowPassword] = useState(false);
+
   return (
     <div className="h-screen flex flex-col items-center w-full">
       <div className="flex justify-between items-center pt-5 pr-5 pb-0 pl-5 shrink-0">
@@ -174,13 +177,32 @@ const AccountSetup = ({ data, setData, onNext }: any) => {
           </div>
 
           <div className="w-full flex flex-col justify-center items-center self-stretch gap-4">
-            <input
+            {/* <input
               className="
             py-4 px-5
             w-full rounded-[10px] border border-[rgba(248,247,252,0.1)]
             text-center
             placeholder-text-[#F8F7FC] placeholder-font-Satoshi placeholder-text-[13px] placeholder-normal placeholder-tracking-[1.95px] placeholder-uppercase
           "
+              style={
+                {
+                  leadingTrim: "both",
+                  textEdge: "cap",
+                } as any
+              }
+              placeholder="Enter Your Phone Number"
+              value={data.phone || ""}
+              onChange={(e) => setData({ ...data, phone: e.target.value })}
+            /> */}
+            <input
+              type="tel"
+              inputMode="numeric"
+              className="
+    py-4 px-5
+    w-full rounded-[10px] border border-[rgba(248,247,252,0.1)]
+    text-center
+    placeholder:text-[#F8F7FC] placeholder:font-Satoshi placeholder:text-[13px] placeholder:tracking-[1.95px] placeholder:uppercase
+  "
               style={
                 {
                   leadingTrim: "both",
@@ -210,7 +232,7 @@ const AccountSetup = ({ data, setData, onNext }: any) => {
               onChange={(e) => setData({ ...data, username: e.target.value })}
             />
 
-            <input
+            {/* <input
               className="
             py-4 px-5
             w-full rounded-[10px] border border-[rgba(248,247,252,0.1)]
@@ -226,7 +248,38 @@ const AccountSetup = ({ data, setData, onNext }: any) => {
               }
               value={data.password || ""}
               onChange={(e) => setData({ ...data, password: e.target.value })}
-            />
+            /> */}
+
+            <div className="relative w-full">
+              <input
+                type={showPassword ? "text" : "password"}
+                className="
+          py-4 px-5 pr-12
+          w-full rounded-[10px] border border-[rgba(248,247,252,0.1)]
+          text-center
+          placeholder-text-[#F8F7FC] placeholder:font-Satoshi placeholder:text-[13px] placeholder:tracking-[1.95px] placeholder:uppercase
+        "
+                placeholder="Create Your Password"
+                style={
+                  {
+                    leadingTrim: "both",
+                    textEdge: "cap",
+                  } as any
+                }
+                value={data.password || ""}
+                onChange={(e) => setData({ ...data, password: e.target.value })}
+              />
+
+              {/* 👁 Eye Icon */}
+              <button
+                type="button"
+                onClick={() => setShowPassword((prev) => !prev)}
+                className="absolute right-4 top-1/2 -translate-y-1/2 text-[#f8f7fcaa] hover:text-white"
+              >
+                {data.password &&
+                  (showPassword ? <EyeOff size={18} /> : <Eye size={18} />)}
+              </button>
+            </div>
           </div>
         </div>
 
