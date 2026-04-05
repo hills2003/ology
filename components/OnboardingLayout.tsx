@@ -54,7 +54,6 @@ export default function OnboardingLayout({
         <div className="fixed inset-0 bg-black/40 backdrop-blur-[2px] pointer-events-none" />
       )}
 
-      {/* 🧩 Content Layer */}
       <div
         className={`relative z-10 w-full min-h-screen px-4 ${
           centerContent
