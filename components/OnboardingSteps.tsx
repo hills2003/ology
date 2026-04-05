@@ -196,7 +196,7 @@ const AccountSetup = ({ data, setData, onNext }: any) => {
             /> */}
             <input
               type="tel"
-              inputMode="numeric"
+              inputMode="tel"
               className="
     py-4 px-5
     w-full rounded-[10px] border border-[rgba(248,247,252,0.1)]
