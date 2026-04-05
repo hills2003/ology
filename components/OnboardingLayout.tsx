@@ -34,7 +34,7 @@ export default function OnboardingLayout({
   }, [videoSrc]);
 
   return (
-    <div className="fixed inset-0 w-full h-dvh overflow-hidden bg-[rgba(13,18,32,0.9)]">
+    <div className="fixed inset-0 w-full h-full overflow-hidden bg-[rgba(13,18,32,0.9)]">
       {/* 🎥 Background Video */}
       {videoSrc && (
         <video
