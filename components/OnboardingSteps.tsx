@@ -12,6 +12,7 @@ import earth from "@/public/earth.svg";
 import Link from "next/link";
 import { Eye, EyeOff } from "lucide-react";
 import DatePicker from "react-datepicker";
+
 import "react-datepicker/dist/react-datepicker.css";
 import TimePicker from "react-time-picker";
 import "react-time-picker/dist/TimePicker.css";
@@ -313,13 +314,15 @@ const BirthDetails = ({ data, setData, onNext }: any) => {
 
           <div className="w-full flex flex-col justify-center items-center self-stretch gap-4">
             <div className="w-full rounded-[10px] border border-[rgba(248,247,252,0.1)]">
-              <div className=" flex flex-col gap-4">
+              <div className="flex flex-col gap-4">
+                {/* Fake Input */}
                 <div
                   className="
-          py-4 px-5 w-full rounded-[10px] border border-[rgba(248,247,252,0.1)]
-          text-center text-white font-Satoshi cursor-pointer
-          placeholder:text-[#F8F7FC] placeholder:font-Satoshi placeholder:text-[13px] placeholder-uppercase
-        "
+        py-4 px-5 w-full rounded-[10px]
+        text-center text-[#F8F7FC] font-Satoshi cursor-pointer
+        placeholder:text-[#F8F7FC] placeholder:font-Satoshi placeholder:text-[13px] placeholder-uppercase
+        border border-[rgba(248,247,252,0.1)]
+      "
                   onClick={() => setOpen(true)}
                 >
                   {data.dob
@@ -333,74 +336,54 @@ const BirthDetails = ({ data, setData, onNext }: any) => {
 
                 {/* Hidden DatePicker */}
                 {open && (
-                  <DatePicker
-                    selected={data.dob}
-                    onChange={(date: Date | null) => {
-                      setData({ dob: date });
-                      setOpen(false); // close after selecting
-                    }}
-                    inline
-                    className="text-center text-white font-Satoshi bg-[#0d1220]"
-                  />
+                  <div className="w-full flex justify-center mt-2">
+                    <DatePicker
+                      selected={data.dob}
+                      onChange={(date: Date | null) => {
+                        setData({ dob: date });
+                        setOpen(false);
+                      }}
+                      inline
+                      className="bg-[#0d1220] text-white font-Satoshi rounded-[10px]"
+                      calendarClassName="mx-auto" // ensures calendar itself is centered
+                    />
+                  </div>
                 )}
               </div>
             </div>
-
             {/* Time of Birth */}
+
             <div
-              className="relative w-full rounded-[10px] border border-[rgba(248,247,252,0.1)]"
-              ref={wrapperRef}
+              className="
+         w-full rounded-[10px]
+          text-center text-{#F8F7FC} font-Satoshi cursor-pointer flex justify-center
+          placeholder:text-[#F8F7FC] placeholder:font-Satoshi placeholder:text-[13px] placeholder-uppercase
+        "
             >
-              {/* Placeholder div */}
-              {!showInput && !data.time && (
-                <div
-                  className="
-            py-4 px-5 w-full text-center text-[#F8F7FC] font-Satoshi text-[13px] tracking-[1.95px] uppercase
-            cursor-text
-          "
-                  onClick={() => setShowInput(true)}
-                >
-                  Time of Birth (HH:MM - AM/PM)
-                </div>
-              )}
-
-              {/* Real input */}
-              {!showInput && !data.time && (
-                <div
-                  className="py-4 px-5 w-full text-center text-[#F8F7FC] font-Satoshi text-[13px] tracking-[1.95px] uppercase cursor-text"
-                  onClick={() => setShowInput(true)}
-                >
-                  Time of Birth (HH:MM AM/PM)
-                </div>
-              )}
-
-              {(showInput || data.time) && (
-                <input
-                  type="text"
-                  value={data.time || ""}
-                  onChange={(e) => {
-                    let val = e.target.value;
-
-                    // Auto-format: add colon and convert 24h to AM/PM if needed
-                    if (/^\d{1,2}$/.test(val)) val += ":";
-                    if (/^\d{1,2}:\d{0,2}$/.test(val)) {
-                      const parts = val.split(":");
-                      if (parts.length === 2 && parts[1].length === 2) {
-                        let hour = parseInt(parts[0]);
-                        let min = parts[1];
-                        let ampm = hour >= 12 ? "PM" : "AM";
-                        hour = hour % 12 || 12;
-                        val = `${hour.toString().padStart(2, "0")}:${min} ${ampm}`;
-                      }
-                    }
-
-                    setData({ ...data, time: val });
-                  }}
-                  placeholder="HH:MM AM/PM"
-                  autoFocus
-                  className="w-full h-12 text-center text-white font-Satoshi bg-transparent border-none outline-none py-0 px-24"
-                />
-              )}
+              <DatePicker
+                selected={data.time} // use Date object
+                onChange={(date: Date | null) =>
+                  setData({ ...data, time: date })
+                }
+                showTimeSelect
+                showTimeSelectOnly
+                timeIntervals={15} // increments: 15 minutes
+                timeCaption="Time"
+                dateFormat="h:mm aa" // AM/PM format
+                placeholderText="HH:MM AM/PM"
+                className="w-full"
+                wrapperClassName="w-full"
+                // Style the input directly
+                popperClassName="w-full"
+                calendarClassName="bg-[#0d1220] text-white font-Satoshi"
+                customInput={
+                  <input
+                    className="w-full text-center py-4 px-5 rounded-[10px] text-[#F8F7FC] font-Satoshi
+                 placeholder:text-[#F8F7FC] placeholder:font-Satoshi
+                 border border-[rgba(248,247,252,0.1)] bg-transparent"
+                  />
+                }
+              />
             </div>
 
             <input
@@ -548,112 +531,62 @@ const Complete = ({ onNext }: any) => (
       </div>
 
       <div className="w-full flex flex-col justify-between items-start px-4 h-[195px]">
-        <div className="flex justify-between items-center gap-4">
+        {/* Row 1 */}
+        <div className="flex items-start gap-4">
           <div
-            className=" flex justify-center items-center
-           
-            p-[12.133px]
-            gap-[10.405px]
-            rounded-[20.81px]
-            border border-[rgba(197,209,224,0.2)]
-          bg-[rgba(21,27,48,0.3)]"
+            className="flex justify-center items-center
+                 p-[12.133px]
+                 gap-[10.405px]
+                 rounded-[20.81px]
+                 border border-[rgba(197,209,224,0.2)]
+                 bg-[rgba(21,27,48,0.3)]"
           >
-            <p
-              className="
-                text-[#F8F7FC]
-                font-Recoleta
-                text-[13.57px]
-                font-normal
-                leading-[150%]
-                tracking-[-0.136px]
-              "
-            >
+            <p className="text-[#F8F7FC] font-Recoleta text-[13.57px] font-normal leading-[150%] tracking-[-0.136px]">
               Taurus Sun
             </p>
           </div>
 
-          <p
-            className="
-          text-[#F8F7FC]
-          font-Satoshi
-          text-[14.466px]
-          font-medium
-          leading-[150%]
-        "
-          >
+          <p className="text-[#F8F7FC] font-Satoshi text-[14.466px] font-medium leading-[150%] flex-1">
             Builds positions others abandon.
           </p>
         </div>
 
-        <div className="flex justify-between items-center gap-4">
+        {/* Row 2 */}
+        <div className="flex items-start gap-4">
           <div
-            className=" flex justify-center items-center
-            p-[12.133px]
-            gap-[10.405px]
-            rounded-[20.81px]
-            border border-[rgba(197,209,224,0.2)]
-          bg-[rgba(21,27,48,0.3)]"
+            className="flex justify-center items-center
+                 p-[12.133px]
+                 gap-[10.405px]
+                 rounded-[20.81px]
+                 border border-[rgba(197,209,224,0.2)]
+                 bg-[rgba(21,27,48,0.3)]"
           >
-            <p
-              className="
-                text-[#F8F7FC]
-                font-Recoleta
-                text-[13.57px]
-                font-normal
-                leading-[150%]
-                tracking-[-0.136px]
-              "
-            >
+            <p className="text-[#F8F7FC] font-Recoleta text-[13.57px] font-normal leading-[150%] tracking-[-0.136px]">
               Scorpio Moon
             </p>
           </div>
 
-          <p
-            className="
-          text-[#F8F7FC]
-          font-Satoshi
-          text-[14.466px]
-          font-medium
-          leading-[150%]
-        "
-          >
+          <p className="text-[#F8F7FC] font-Satoshi text-[14.466px] font-medium leading-[150%] flex-1">
             Feels the shift before the chart does.
           </p>
         </div>
 
-        <div className="flex justify-between items-center gap-4">
+        {/* Row 3 */}
+        <div className="flex items-start gap-4">
           <div
-            className=" flex justify-center items-center
-           
-            p-[12.133px]
-            gap-[10.405px]
-            rounded-[20.81px]
-            border border-[rgba(197,209,224,0.2)]
-          bg-[rgba(21,27,48,0.3)]"
+            className="flex justify-center items-center
+                 p-[12.133px]
+                 gap-[10.405px]
+                 rounded-[20.81px]
+                 border border-[rgba(197,209,224,0.2)]
+                 bg-[rgba(21,27,48,0.3)]"
           >
-            <p
-              className="
-                text-[#F8F7FC]
-                font-Recoleta
-                text-[13.57px]
-                font-normal
-                leading-[150%]
-                tracking-[-0.136px]
-              "
-            >
+            <p className="text-[#F8F7FC] font-Recoleta text-[13.57px] font-normal leading-[150%] tracking-[-0.136px]">
               Virgo Rising
             </p>
           </div>
 
-          <p
-            className="
-          text-[#F8F7FC]
-          font-Satoshi
-          text-[14.466px]
-          font-medium
-          leading-[150%]
-        "
-          >
+          <p className="text-[#F8F7FC] font-Satoshi text-[14.466px] font-medium leading-[150%] flex-1">
             Measures twice. Moves once.
           </p>
         </div>

@@ -32,7 +32,7 @@ export default function OnboardingLayout({
   }, [videoSrc]);
 
   return (
-    <div className="relative w-full h-[100dvh] min-h-screen overflow-hidden bg-[rgba(13,18,32,0.9)]">
+    <div className="relative w-full min-h-screen overflow-hidden bg-[rgba(13,18,32,0.9)]">
       {/* 🎥 Background Video */}
       {videoSrc && (
         <video
@@ -41,7 +41,7 @@ export default function OnboardingLayout({
           muted
           loop
           playsInline
-          className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-700 ${
+          className={`fixed top-0 left-0 h-screen w-screen object-cover transition-opacity duration-700 pointer-events-none ${
             loaded ? "opacity-100" : "opacity-0"
           }`}
         >
@@ -51,12 +51,12 @@ export default function OnboardingLayout({
 
       {/* 🌑 Overlay */}
       {overlay && (
-        <div className="absolute inset-0 bg-black/40 backdrop-blur-[2px]" />
+        <div className="fixed inset-0 bg-black/40 backdrop-blur-[2px] pointer-events-none" />
       )}
 
       {/* 🧩 Content Layer */}
       <div
-        className={`relative z-10 w-full h-full overflow-auto px-4 ${
+        className={`relative z-10 w-full min-h-screen px-4 ${
           centerContent
             ? "flex flex-col items-center justify-center"
             : "flex flex-col"
