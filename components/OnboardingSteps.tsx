@@ -298,6 +298,38 @@ const AccountSetup = ({ data, setData, onNext }: any) => {
 const BirthDetails = ({ data, setData, onNext }: any) => {
   const canProceed = data.dob && data.time && data.location;
 
+  const formatDOB = (value: string) => {
+    let digits = value.replace(/\D/g, "").slice(0, 8);
+
+    let mm = digits.slice(0, 2);
+    let dd = digits.slice(2, 4);
+    let yyyy = digits.slice(4, 8);
+
+    if (mm && parseInt(mm) > 12) mm = "12";
+    if (dd && parseInt(dd) > 31) dd = "31";
+
+    if (digits.length <= 2) return mm;
+    if (digits.length <= 4) return `${mm} / ${dd}`;
+    return `${mm} / ${dd} / ${yyyy}`;
+  };
+
+  const formatTime = (value: string) => {
+    // Remove everything except digits
+    let digits = value.replace(/\D/g, "").slice(0, 4); // HHMM max
+
+    let hh = digits.slice(0, 2);
+    let mm = digits.slice(2, 4);
+
+    // Clamp hours and minutes
+    if (hh && parseInt(hh) > 12) hh = "12";
+    if (mm && parseInt(mm) > 59) mm = "59";
+
+    // Return formatted string
+    if (digits.length <= 2) return hh;
+    if (digits.length <= 4) return `${hh}:${mm} - `;
+    return `${hh}:${mm} - ${value.slice(-2).toUpperCase()}`; // keep AM/PM if user types it
+  };
+
   return (
     <div className="h-screen flex flex-col items-center">
       <div className="flex justify-between items-center pt-5 pr-5 pb-0 pl-5 shrink-0">
@@ -328,46 +360,43 @@ const BirthDetails = ({ data, setData, onNext }: any) => {
 
           <div className="w-full flex flex-col justify-center items-center self-stretch gap-4">
             <input
+              type="tel"
+              inputMode="numeric"
               className="
-                py-4 px-5
-                w-full rounded-[10px] border border-[rgba(248,247,252,0.1)]
-                text-center
-                text-white
-                appearance-none
-                placeholder-text-[#F8F7FC] placeholder-font-Satoshi placeholder-text-[13px] placeholder-normal placeholder-tracking-[1.95px] placeholder-uppercase
-              "
-              style={
-                {
-                  leadingTrim: "both",
-                  textEdge: "cap",
-                  accentColor: "white",
-                } as any
-              }
+              py-4 px-5
+              w-full rounded-[10px] border border-[rgba(248,247,252,0.1)]
+              text-center text-white
+              placeholder:text-[#F8F7FC] placeholder:font-Satoshi placeholder:text-[13px] placeholder:tracking-[1.95px] placeholder:uppercase
+            "
               placeholder="Date of Birth ( MM / DD / YYYY )"
-              // type="date"
               value={data.dob || ""}
-              onChange={(e) => setData({ ...data, dob: e.target.value })}
+              onChange={(e) => {
+                const formatted = formatDOB(e.target.value);
+                setData((prev: any) => ({
+                  ...prev,
+                  dob: formatted,
+                }));
+              }}
             />
 
             <input
+              type="tel"
+              inputMode="numeric"
               className="
-            py-4 px-5
-            w-full rounded-[10px] border border-[rgba(248,247,252,0.1)]
-            text-center
-            text-white
-            placeholder-text-[#F8F7FC] placeholder-font-Satoshi placeholder-text-[13px] placeholder-normal placeholder-tracking-[1.95px] placeholder-uppercase
-          "
+                py-4 px-5
+                w-full rounded-[10px] border border-[rgba(248,247,252,0.1)]
+                text-center text-white
+                placeholder:text-[#F8F7FC] placeholder:font-Satoshi placeholder:text-[13px] placeholder:tracking-[1.95px] placeholder:uppercase
+              "
               placeholder="Time of Birth ( HH:MM - AM/PM )"
-              style={
-                {
-                  leadingTrim: "both",
-                  textEdge: "cap",
-                  accentColor: "white",
-                } as any
-              }
-              //type="time"
               value={data.time || ""}
-              onChange={(e) => setData({ ...data, time: e.target.value })}
+              onChange={(e) => {
+                const formatted = formatTime(e.target.value);
+                setData((prev: any) => ({
+                  ...prev,
+                  time: formatted,
+                }));
+              }}
             />
 
             <input
