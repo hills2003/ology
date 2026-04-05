@@ -365,18 +365,40 @@ const BirthDetails = ({ data, setData, onNext }: any) => {
               )}
 
               {/* Real input */}
+              {!showInput && !data.time && (
+                <div
+                  className="py-4 px-5 w-full text-center text-[#F8F7FC] font-Satoshi text-[13px] tracking-[1.95px] uppercase cursor-text"
+                  onClick={() => setShowInput(true)}
+                >
+                  Time of Birth (HH:MM AM/PM)
+                </div>
+              )}
+
               {(showInput || data.time) && (
                 <input
-                  type="time"
+                  type="text"
                   value={data.time || ""}
-                  onChange={(e) => setData({ ...data, time: e.target.value })}
-                  step={60}
+                  onChange={(e) => {
+                    let val = e.target.value;
+
+                    // Auto-format: add colon and convert 24h to AM/PM if needed
+                    if (/^\d{1,2}$/.test(val)) val += ":";
+                    if (/^\d{1,2}:\d{0,2}$/.test(val)) {
+                      const parts = val.split(":");
+                      if (parts.length === 2 && parts[1].length === 2) {
+                        let hour = parseInt(parts[0]);
+                        let min = parts[1];
+                        let ampm = hour >= 12 ? "PM" : "AM";
+                        hour = hour % 12 || 12;
+                        val = `${hour.toString().padStart(2, "0")}:${min} ${ampm}`;
+                      }
+                    }
+
+                    setData({ ...data, time: val });
+                  }}
+                  placeholder="HH:MM AM/PM"
                   autoFocus
-                  className="
-      w-full h-12 text-center text-white font-Satoshi
-      bg-transparent border-none outline-none
-      py-0 px-24
-    "
+                  className="w-full h-12 text-center text-white font-Satoshi bg-transparent border-none outline-none py-0 px-24"
                 />
               )}
             </div>
