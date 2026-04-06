@@ -77,7 +77,7 @@ export function DatePickerTime() {
           >
             {/* Shows entered time if exists, otherwise placeholder */}
             {time ?? "Time of Birth ( HH:MM - AM/PM )"}
-            <ChevronDownIcon />
+            <ChevronDownIcon size={16} />
           </button>
         )}
       </Field>

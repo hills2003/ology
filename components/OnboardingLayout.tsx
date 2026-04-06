@@ -32,7 +32,7 @@ export default function OnboardingLayout({
   }, [videoSrc]);
 
   return (
-    <div className="relative w-full min-h-screen overflow-hidden bg-[rgba(13,18,32,0.9)]">
+    <div className="relative w-full h-screen overflow-hidden bg-[rgba(13,18,32,0.9)]">
       {/* 🎥 Background Video */}
       {videoSrc && (
         <video
