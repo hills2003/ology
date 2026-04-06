@@ -54,7 +54,7 @@ export default function OnboardingLayout({
       )}
 
       <div
-        className={`relative z-10 w-full min-h-screen px-4 ${
+        className={`relative z-10 w-full h-screen px-4 ${
           centerContent
             ? "flex flex-col items-center justify-center"
             : "flex flex-col"
