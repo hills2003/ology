@@ -16,6 +16,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import TimePicker from "react-time-picker";
 import "react-time-picker/dist/TimePicker.css";
+import { DatePickerTime } from "./DateTimePicker";
 
 type WrapperProps = {
   children: React.ReactNode;
@@ -107,12 +108,16 @@ const EnterName = ({ data, setData, onNext }: any) => {
 
           <input
             className="
-            py-4 px-5
-            w-full rounded-[10px] border border-[rgba(248,247,252,0.1)]
-            text-center
-            placeholder-text-[#F8F7FC] placeholder-font-Satoshi placeholder-text-[13px] placeholder-normal placeholder-tracking-[1.95px] placeholder-uppercase
-          "
-            placeholder="Enter Your Name"
+    py-4 px-5
+    w-full rounded-[10px] border border-[rgba(248,247,252,0.1)]
+    text-center 
+    placeholder:text-[#F8F7FC] 
+    placeholder:font-Satoshi 
+    placeholder:text-[13px] 
+    placeholder:font-normal 
+    placeholder:tracking-[1.95px]
+  "
+            placeholder="ENTER YOUR NAME"
             style={
               {
                 leadingTrim: "both",
@@ -183,21 +188,26 @@ const AccountSetup = ({ data, setData, onNext }: any) => {
 
           <div className="w-full flex flex-col justify-center items-center self-stretch gap-4">
             <input
+              className="
+            py-4 px-5
+            w-full rounded-[10px] border border-[rgba(248,247,252,0.1)]
+            text-center
+            
+           placeholder:text-[#F8F7FC] 
+    placeholder:font-Satoshi 
+    placeholder:text-[13px] 
+    placeholder:font-normal 
+    placeholder:tracking-[1.95px]
+          "
               type="tel"
               inputMode="tel"
-              className="
-    py-4 px-5
-    w-full rounded-[10px] border border-[rgba(248,247,252,0.1)]
-    text-center
-    placeholder:text-[#F8F7FC] placeholder:font-Satoshi placeholder:text-[13px] placeholder:tracking-[1.95px] placeholder:uppercase
-  "
               style={
                 {
                   leadingTrim: "both",
                   textEdge: "cap",
                 } as any
               }
-              placeholder="Enter Your Phone Number"
+              placeholder="ENTER YOUR PHONE NUMBER"
               value={data.phone || ""}
               onChange={(e) => setData({ ...data, phone: e.target.value })}
             />
@@ -207,9 +217,13 @@ const AccountSetup = ({ data, setData, onNext }: any) => {
             py-4 px-5
             w-full rounded-[10px] border border-[rgba(248,247,252,0.1)]
             text-center
-            placeholder-text-[#F8F7FC] placeholder-font-Satoshi placeholder-text-[13px] placeholder-normal placeholder-tracking-[1.95px] placeholder-uppercase
+           placeholder:text-[#F8F7FC] 
+    placeholder:font-Satoshi 
+    placeholder:text-[13px] 
+    placeholder:font-normal 
+    placeholder:tracking-[1.95px]
           "
-              placeholder="Create your username"
+              placeholder="CREATE YOUR USERNAME"
               style={
                 {
                   leadingTrim: "both",
@@ -222,14 +236,18 @@ const AccountSetup = ({ data, setData, onNext }: any) => {
 
             <div className="relative w-full">
               <input
-                type={showPassword ? "text" : "password"}
+                type={!showPassword ? "password" : "text"}
                 className="
-          py-4 px-5 pr-12
-          w-full rounded-[10px] border border-[rgba(248,247,252,0.1)]
-          text-center
-          placeholder-text-[#F8F7FC] placeholder:font-Satoshi placeholder:text-[13px] placeholder:tracking-[1.95px] placeholder:uppercase
-        "
-                placeholder="Create Your Password"
+            py-4 px-5
+            w-full rounded-[10px] border border-[rgba(248,247,252,0.1)]
+            text-center
+           placeholder:text-[#F8F7FC] 
+    placeholder:font-Satoshi 
+    placeholder:text-[13px] 
+    placeholder:font-normal 
+    placeholder:tracking-[1.95px]
+          "
+                placeholder="CREATE YOUR PASSWORD"
                 style={
                   {
                     leadingTrim: "both",
@@ -266,7 +284,7 @@ const AccountSetup = ({ data, setData, onNext }: any) => {
 };
 
 const BirthDetails = ({ data, setData, onNext }: any) => {
-  const canProceed = data.dob && data.time && data.location;
+  const canProceed = data.location;
   const [open, setOpen] = useState(false);
   const [showInput, setShowInput] = useState(false);
   const wrapperRef = useRef<HTMLDivElement>(null);
@@ -284,6 +302,7 @@ const BirthDetails = ({ data, setData, onNext }: any) => {
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [data.time]);
+
   return (
     <div className="h-screen flex flex-col items-center">
       <div className="flex justify-between items-center pt-5 pr-5 pb-0 pl-5 shrink-0">
@@ -313,46 +332,6 @@ const BirthDetails = ({ data, setData, onNext }: any) => {
           </div>
 
           <div className="w-full flex flex-col justify-center items-center self-stretch gap-4">
-            <div className="w-full rounded-[10px] border border-[rgba(248,247,252,0.1)]">
-              <div className="flex flex-col gap-4">
-                {/* Fake Input */}
-                <div
-                  className="
-        py-4 px-5 w-full rounded-[10px]
-        text-center text-[#F8F7FC] font-Satoshi cursor-pointer
-        placeholder:text-[#F8F7FC] placeholder:font-Satoshi placeholder:text-[13px] placeholder-uppercase
-        border border-[rgba(248,247,252,0.1)]
-      "
-                  onClick={() => setOpen(true)}
-                >
-                  {data.dob
-                    ? data.dob.toLocaleDateString("en-US", {
-                        month: "2-digit",
-                        day: "2-digit",
-                        year: "numeric",
-                      })
-                    : "Date of Birth (MM/DD/YYYY)"}
-                </div>
-
-                {/* Hidden DatePicker */}
-                {open && (
-                  <div className="w-full flex justify-center mt-2">
-                    <DatePicker
-                      selected={data.dob}
-                      onChange={(date: Date | null) => {
-                        setData({ dob: date });
-                        setOpen(false);
-                      }}
-                      inline
-                      className="bg-[#0d1220] text-white font-Satoshi rounded-[10px]"
-                      calendarClassName="mx-auto" // ensures calendar itself is centered
-                    />
-                  </div>
-                )}
-              </div>
-            </div>
-            {/* Time of Birth */}
-
             <div
               className="
          w-full rounded-[10px]
@@ -360,30 +339,7 @@ const BirthDetails = ({ data, setData, onNext }: any) => {
           placeholder:text-[#F8F7FC] placeholder:font-Satoshi placeholder:text-[13px] placeholder-uppercase
         "
             >
-              <DatePicker
-                selected={data.time} // use Date object
-                onChange={(date: Date | null) =>
-                  setData({ ...data, time: date })
-                }
-                showTimeSelect
-                showTimeSelectOnly
-                timeIntervals={15} // increments: 15 minutes
-                timeCaption="Time"
-                dateFormat="h:mm aa" // AM/PM format
-                placeholderText="HH:MM AM/PM"
-                className="w-full"
-                wrapperClassName="w-full"
-                // Style the input directly
-                popperClassName="w-full"
-                calendarClassName="bg-[#0d1220] text-white font-Satoshi"
-                customInput={
-                  <input
-                    className="w-full text-center py-4 px-5 rounded-[10px] text-[#F8F7FC] font-Satoshi
-                 placeholder:text-[#F8F7FC] placeholder:font-Satoshi
-                 border border-[rgba(248,247,252,0.1)] bg-transparent"
-                  />
-                }
-              />
+              <DatePickerTime />
             </div>
 
             <input
@@ -391,7 +347,11 @@ const BirthDetails = ({ data, setData, onNext }: any) => {
             py-4 px-5
             w-full rounded-[10px] border border-[rgba(248,247,252,0.1)]
             text-center
-            placeholder-text-[#F8F7FC] placeholder-font-Satoshi placeholder-text-[13px] placeholder-normal placeholder-tracking-[1.95px] placeholder-uppercase
+          placeholder:text-[#F8F7FC] 
+    placeholder:font-Satoshi 
+    placeholder:text-[13px] 
+    placeholder:font-normal 
+    placeholder:tracking-[1.95px]
           "
               placeholder="Location of Birth"
               style={
