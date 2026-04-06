@@ -18,10 +18,8 @@ export function DatePickerTime() {
   const [open, setOpen] = React.useState(false);
   const [date, setDate] = React.useState<Date | undefined>(undefined);
 
-  const [openTime, setOpenTime] = React.useState(false);
-  const timeInputRef = React.useRef<HTMLInputElement>(null);
-  const [time, setTime] = React.useState<string | null>(null);
-
+  const [time, setTime] = React.useState<string | null>(null); // stores the selected time
+  const [openTime, setOpenTime] = React.useState<boolean>(false); // controls if input is visible
   return (
     <FieldGroup className="w-full flex flex-col gap-4">
       <Field>
@@ -61,23 +59,27 @@ export function DatePickerTime() {
         </Popover>
       </Field>
 
-      <Field className="w-full">
-        <input
-          ref={timeInputRef}
-          type="time"
-          className="hidden"
-          value={time || ""}
-          onChange={(e) => setTime(e.target.value)}
-        />
-
-        <Button
-          variant="outline"
-          className="w-full text-[13px] font-normal tracking-[1.95px] justify-between font-Satoshi py-6 px-5 border border-[rgba(248,247,252,0.1)] text-[#F8F7FC]"
-          onClick={() => timeInputRef.current?.showPicker?.()} // triggers native picker
-        >
-          {time ? time : "Time of Birth ( HH:MM - AM/PM )"}
-          <ChevronDownIcon />
-        </Button>
+      <Field className="w-full relative">
+        {openTime ? (
+          <input
+            type="time"
+            value={time || ""}
+            onChange={(e) => setTime(e.target.value)}
+            onBlur={() => setOpenTime(false)} // closes input when clicked outside
+            autoFocus
+            className="w-full py-4 px-5 border border-[rgba(248,247,252,0.1)] rounded-[10px] text-[13px] font-normal tracking-[1.95px] font-Satoshi text-[#F8F7FC] bg-background outline-none"
+          />
+        ) : (
+          <button
+            type="button"
+            className="w-full py-4 px-5 border border-[rgba(248,247,252,0.1)] rounded-[10px] text-[13px] font-normal tracking-[1.95px] font-Satoshi text-[#F8F7FC] flex justify-between items-center"
+            onClick={() => setOpenTime(true)}
+          >
+            {/* Shows entered time if exists, otherwise placeholder */}
+            {time ?? "Time of Birth ( HH:MM - AM/PM )"}
+            <ChevronDownIcon />
+          </button>
+        )}
       </Field>
     </FieldGroup>
   );

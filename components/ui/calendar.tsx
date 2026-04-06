@@ -215,7 +215,6 @@ function CalendarDayButton({
     { date: new Date(2026, 1, 27), color: "bg-[rgba(155,143,212,0.3)]" }, // Feb 27
   ];
 
-  const dayColor = specialDays.find((d) => isSameDay(d.date, day.date))?.color;
   return (
     <Button
       ref={ref}
