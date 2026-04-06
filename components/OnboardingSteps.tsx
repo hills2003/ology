@@ -40,7 +40,7 @@ const Wrapper = ({ children }: WrapperProps) => {
 };
 
 const Welcome = ({ onNext }: any) => (
-  <div className="flex flex-col min-h-screen items-center justify-between">
+  <div className="flex flex-col min-h-[100dvh] items-center justify-between">
     <div className="h-[185px] flex justify-between items-end p-5">
       <div className="relative w-37.5 h-[62.5px] aspect-[12/5]">
         <Image src={ologyLogo} alt="Logo" fill className="object-contain" />
@@ -90,7 +90,7 @@ const EnterName = ({ data, setData, onNext }: any) => {
   const canProceed = data.name?.trim().length > 0;
 
   return (
-    <div className="min-h-screen flex flex-col items-center">
+    <div className="min-h-[100dvh] flex flex-col items-center">
       <div className="flex justify-between items-center pt-5 pr-5 pb-0 pl-5 shrink-0">
         <div className="flex items-center gap-[23.662px] pt-[43.67px] pb-[43.67px]">
           <div className="relative w-28 h-[46.667px] aspect-[12/5]">
@@ -157,7 +157,7 @@ const AccountSetup = ({ data, setData, onNext }: any) => {
   const [showPassword, setShowPassword] = useState(false);
 
   return (
-    <div className="min-h-screen flex flex-col items-center w-full">
+    <div className="min-h-[100dvh] flex flex-col items-center w-full">
       <div className="flex justify-between items-center pt-5 pr-5 pb-0 pl-5 shrink-0">
         <div className="flex items-center gap-[23.662px] pt-[43.67px] pb-[43.67px]">
           <div className="relative w-28 h-[46.667px] aspect-[12/5]">
@@ -165,7 +165,7 @@ const AccountSetup = ({ data, setData, onNext }: any) => {
           </div>
         </div>
       </div>
-      <div className="min-h-screen w-full flex flex-col justify-start items-center gap-[103px] pt-10 px-2.5 pb-12.5 flex-[1_0_0]">
+      <div className="min-h-[100dvh] w-full flex flex-col justify-start items-center gap-[103px] pt-10 px-2.5 pb-12.5 flex-[1_0_0]">
         <div className="w-full flex flex-col items-center gap-20.5 h-auto">
           <div className="flex flex-col justify-center items-center gap-7.5 self-stretch">
             <h1 className="text-[#E8E9F3] text-center font-Recoleta text-[32px] font-normal leading-[120%] self-stretch">
@@ -305,7 +305,7 @@ const BirthDetails = ({ data, setData, onNext }: any) => {
   }, []);
 
   return (
-    <div className="min-h-screen flex flex-col items-center">
+    <div className="min-h-[100dvh] flex flex-col items-center">
       <div className="flex justify-between items-center pt-5 pr-5 pb-0 pl-5 shrink-0">
         <div className="flex items-center gap-[23.662px] pt-[43.67px] pb-[43.67px]">
           <div className="relative w-28 h-[46.667px] aspect-[12/5]">
@@ -313,7 +313,7 @@ const BirthDetails = ({ data, setData, onNext }: any) => {
           </div>
         </div>
       </div>
-      <div className="min-h-screen w-full flex flex-col justify-start items-center gap-[103px] pt-10 px-2.5 pb-12.5 flex-[1_0_0]">
+      <div className="min-h-[100dvh] w-full flex flex-col justify-start items-center gap-[103px] pt-10 px-2.5 pb-12.5 flex-[1_0_0]">
         <div className="w-full flex flex-col items-center gap-20.5 h-auto">
           <div className="flex flex-col justify-center items-center gap-7.5 self-stretch">
             <h1 className="text-[#E8E9F3] text-center font-Recoleta text-[32px] font-normal leading-[120%] self-stretch">
@@ -386,7 +386,7 @@ const BirthDetails = ({ data, setData, onNext }: any) => {
 };
 
 const Preview = ({ onNext }: any) => (
-  <div className="min-h-screen flex flex-col items-center">
+  <div className="min-h-[100dvh] flex flex-col items-center">
     <div className="flex justify-between items-center pt-5 pr-5 pb-0 pl-5 shrink-0">
       <div className="flex items-center gap-[23.662px] pt-[43.67px] pb-[43.67px]">
         <div className="relative w-28 h-[46.667px] aspect-[12/5]">
@@ -394,7 +394,7 @@ const Preview = ({ onNext }: any) => (
         </div>
       </div>
     </div>
-    <div className="min-h-screen w-full flex flex-col justify-start items-center gap-[103px] pt-10 px-2.5 pb-12.5 flex-[1_0_0]">
+    <div className="min-h-[100dvh] w-full flex flex-col justify-start items-center gap-[103px] pt-10 px-2.5 pb-12.5 flex-[1_0_0]">
       <div className="w-full flex flex-col items-center gap-20.5 h-auto">
         <div className="flex flex-col justify-center items-center gap-[34.812px] mt-[32px] self-stretch">
           <h1 className="text-[#E8E9F3] text-center font-Recoleta text-[37.133px] font-normal leading-[120%] self-stretch">
@@ -461,7 +461,7 @@ const Preview = ({ onNext }: any) => (
 );
 
 const Complete = ({ onNext }: any) => (
-  <div className="min-h-screen flex flex-col items-center">
+  <div className="min-h-[100dvh] flex flex-col items-center">
     <div className="flex justify-between items-center py-[21.05px] px-5 shrink-0">
       <div className="flex items-center gap-[14.151pxpx]">
         <div className="relative w-[66.981px] h-[27.909px] aspect-[12/5]">
@@ -470,7 +470,7 @@ const Complete = ({ onNext }: any) => (
       </div>
     </div>
 
-    <div className="min-h-screen w-full flex flex-col justify-between items-center py-7.5 pb-12.5 flex-[1_0_0]">
+    <div className="min-h-[100dvh] w-full flex flex-col justify-between items-center py-7.5 pb-12.5 flex-[1_0_0]">
       <div className="w-full flex flex-col items-start gap-20.5 h-auto">
         <div className="flex flex-col justify-center items-center gap-[34.812px] self-stretch">
           <h1 className="text-[#E8E9F3] text-center font-Recoleta text-[32px] font-normal leading-[120%] self-stretch">
