@@ -21,6 +21,7 @@ import MercuryIcon from "@/public/Mercury.svg";
 import MoonIcon from "@/public/Moon.svg";
 import { motion, AnimatePresence } from "framer-motion";
 import GlassChartModal from "@/components/GlassChartModal";
+import Link from "next/link";
 
 const MarketIntelligencePage: React.FC = () => {
   const [data, setData] = useState<any>(null);
@@ -407,6 +408,27 @@ const MarketIntelligencePage: React.FC = () => {
               </button>
             );
           })}
+        </div>
+
+        <div className="w-full flex justify-center">
+          <Link href="cosmic-calendar">
+            <span
+              className="
+            text-[#F8F7FC]      
+            text-center         
+            font-satoshi         
+            text-[10.907px]   
+            italic              
+            font-normal         
+            leading-[16.36px]     
+            underline             
+            decoration-solid      
+            decoration-[1px]     
+           "
+            >
+              View Cosmic Calendar →
+            </span>
+          </Link>
         </div>
 
         <div

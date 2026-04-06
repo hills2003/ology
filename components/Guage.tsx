@@ -51,7 +51,16 @@ const Gauge: React.FC<GaugeProps> = ({
           y="-10"
           textAnchor="middle"
           dominantBaseline="middle"
-          className="text-white font-Satoshi font-bold text-lg"
+          fill="#F8F7FC" // text color
+          fontFamily="Satoshi" // font family
+          fontWeight="var(--sds-typography-heading-font-weight)" // font weight
+          fontSize="40px" // font size
+          letterSpacing="0.012px" // letter spacing
+          style={{
+            fontVariantNumeric: "lining-nums tabular-nums", // numeric style
+            textAlign: "center", // aligns text within SVG (approx)
+            lineHeight: "48px", // SVG line height (mostly ignored for single line)
+          }}
         >
           {value}%
         </text>

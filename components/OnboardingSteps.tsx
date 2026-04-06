@@ -17,6 +17,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import TimePicker from "react-time-picker";
 import "react-time-picker/dist/TimePicker.css";
 import { DatePickerTime } from "./DateTimePicker";
+import { setOptions, importLibrary } from "@googlemaps/js-api-loader"
 
 type WrapperProps = {
   children: React.ReactNode;
@@ -110,7 +111,7 @@ const EnterName = ({ data, setData, onNext }: any) => {
             className="
     py-4 px-5
     w-full rounded-[10px] border border-[rgba(248,247,252,0.1)]
-    text-center 
+    text-center font-Satoshi text-[#F8F7FC] text-[13px] font-normal tracking-[1.95px]
     placeholder:text-[#F8F7FC] 
     placeholder:font-Satoshi 
     placeholder:text-[13px] 
@@ -151,10 +152,7 @@ const EnterName = ({ data, setData, onNext }: any) => {
 };
 
 const AccountSetup = ({ data, setData, onNext }: any) => {
-  const canProceed =
-    data.username?.length > 2 &&
-    data.password?.length >= 6 &&
-    data.phone?.length > 6;
+  const canProceed = data.username?.length > 2 && data.password?.length >= 6;
 
   const [showPassword, setShowPassword] = useState(false);
 
@@ -191,32 +189,7 @@ const AccountSetup = ({ data, setData, onNext }: any) => {
               className="
             py-4 px-5
             w-full rounded-[10px] border border-[rgba(248,247,252,0.1)]
-            text-center
-            
-           placeholder:text-[#F8F7FC] 
-    placeholder:font-Satoshi 
-    placeholder:text-[13px] 
-    placeholder:font-normal 
-    placeholder:tracking-[1.95px]
-          "
-              type="tel"
-              inputMode="tel"
-              style={
-                {
-                  leadingTrim: "both",
-                  textEdge: "cap",
-                } as any
-              }
-              placeholder="ENTER YOUR PHONE NUMBER"
-              value={data.phone || ""}
-              onChange={(e) => setData({ ...data, phone: e.target.value })}
-            />
-
-            <input
-              className="
-            py-4 px-5
-            w-full rounded-[10px] border border-[rgba(248,247,252,0.1)]
-            text-center
+            text-center font-Satoshi text-[#F8F7FC] text-[13px] font-normal tracking-[1.95px]
            placeholder:text-[#F8F7FC] 
     placeholder:font-Satoshi 
     placeholder:text-[13px] 
@@ -240,7 +213,7 @@ const AccountSetup = ({ data, setData, onNext }: any) => {
                 className="
             py-4 px-5
             w-full rounded-[10px] border border-[rgba(248,247,252,0.1)]
-            text-center
+            text-center font-Satoshi text-[#F8F7FC] text-[13px] font-normal tracking-[1.95px]
            placeholder:text-[#F8F7FC] 
     placeholder:font-Satoshi 
     placeholder:text-[13px] 
@@ -303,6 +276,34 @@ const BirthDetails = ({ data, setData, onNext }: any) => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [data.time]);
 
+const inputRef = useRef<HTMLInputElement | null>(null)
+
+  useEffect(() => {
+    setOptions({
+      key: process.env.NEXT_PUBLIC_GOOGLE_API_KEY!,
+    })
+
+    importLibrary("places").then(() => {
+      if (!inputRef.current) return
+
+      const autocomplete = new (window as any).google.maps.places.Autocomplete(
+        inputRef.current,
+        {
+          types: ["(cities)"],
+        }
+      )
+
+      autocomplete.addListener("place_changed", () => {
+        const place = autocomplete.getPlace()
+
+        setData({
+          ...data,
+          location: place.formatted_address || place.name,
+        })
+      })
+    })
+  }, [])
+
   return (
     <div className="h-screen flex flex-col items-center">
       <div className="flex justify-between items-center pt-5 pr-5 pb-0 pl-5 shrink-0">
@@ -342,11 +343,11 @@ const BirthDetails = ({ data, setData, onNext }: any) => {
               <DatePickerTime />
             </div>
 
-            <input
+            {/* <input
               className="
             py-4 px-5
             w-full rounded-[10px] border border-[rgba(248,247,252,0.1)]
-            text-center
+            text-start font-Satoshi text-[#F8F7FC] text-[13px] font-normal tracking-[1.95px]
           placeholder:text-[#F8F7FC] 
     placeholder:font-Satoshi 
     placeholder:text-[13px] 
@@ -354,12 +355,30 @@ const BirthDetails = ({ data, setData, onNext }: any) => {
     placeholder:tracking-[1.95px]
           "
               placeholder="Location of Birth"
+             
+              value={data.location || ""}
+              onChange={(e) => setData({ ...data, location: e.target.value })}
+            /> */}
+
+            <input
+              ref={inputRef}
+              className="
+                py-4 px-5
+                w-full rounded-[10px] border border-[rgba(248,247,252,0.1)]
+                text-start font-Satoshi text-[#F8F7FC] text-[13px] font-normal tracking-[1.95px]
+                placeholder:text-[#F8F7FC]
+                placeholder:font-Satoshi
+                placeholder:text-[13px]
+                placeholder:font-normal
+                placeholder:tracking-[1.95px]
+              "
               style={
                 {
                   leadingTrim: "both",
                   textEdge: "cap",
                 } as any
               }
+              placeholder="Location of Birth"
               value={data.location || ""}
               onChange={(e) => setData({ ...data, location: e.target.value })}
             />
