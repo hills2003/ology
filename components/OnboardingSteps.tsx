@@ -17,7 +17,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import TimePicker from "react-time-picker";
 import "react-time-picker/dist/TimePicker.css";
 import { DatePickerTime } from "./DateTimePicker";
-import { setOptions, importLibrary } from "@googlemaps/js-api-loader"
+import { setOptions, importLibrary } from "@googlemaps/js-api-loader";
 
 type WrapperProps = {
   children: React.ReactNode;
@@ -276,33 +276,33 @@ const BirthDetails = ({ data, setData, onNext }: any) => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [data.time]);
 
-const inputRef = useRef<HTMLInputElement | null>(null)
+  const inputRef = useRef<HTMLInputElement | null>(null);
 
   useEffect(() => {
     setOptions({
       key: process.env.NEXT_PUBLIC_GOOGLE_API_KEY!,
-    })
+    });
 
     importLibrary("places").then(() => {
-      if (!inputRef.current) return
+      if (!inputRef.current) return;
 
       const autocomplete = new (window as any).google.maps.places.Autocomplete(
         inputRef.current,
         {
           types: ["(cities)"],
-        }
-      )
+        },
+      );
 
       autocomplete.addListener("place_changed", () => {
-        const place = autocomplete.getPlace()
+        const place = autocomplete.getPlace();
 
         setData({
           ...data,
           location: place.formatted_address || place.name,
-        })
-      })
-    })
-  }, [])
+        });
+      });
+    });
+  }, []);
 
   return (
     <div className="h-screen flex flex-col items-center">
@@ -343,25 +343,13 @@ const inputRef = useRef<HTMLInputElement | null>(null)
               <DatePickerTime />
             </div>
 
-            {/* <input
-              className="
-            py-4 px-5
-            w-full rounded-[10px] border border-[rgba(248,247,252,0.1)]
-            text-start font-Satoshi text-[#F8F7FC] text-[13px] font-normal tracking-[1.95px]
-          placeholder:text-[#F8F7FC] 
-    placeholder:font-Satoshi 
-    placeholder:text-[13px] 
-    placeholder:font-normal 
-    placeholder:tracking-[1.95px]
-          "
-              placeholder="Location of Birth"
-             
-              value={data.location || ""}
-              onChange={(e) => setData({ ...data, location: e.target.value })}
-            /> */}
-
             <input
               ref={inputRef}
+              autoComplete="off"
+              autoCorrect="off"
+              spellCheck={false}
+              inputMode="text"
+              name="birth_location"
               className="
                 py-4 px-5
                 w-full rounded-[10px] border border-[rgba(248,247,252,0.1)]
