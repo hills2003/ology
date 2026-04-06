@@ -278,31 +278,50 @@ const BirthDetails = ({ data, setData, onNext }: any) => {
 
   const inputRef = useRef<HTMLInputElement | null>(null);
 
+  const [suggestions, setSuggestions] = useState<any[]>([]);
+  const [showDropdown, setShowDropdown] = useState(false);
+  const [googleLoaded, setGoogleLoaded] = useState(false);
+
   useEffect(() => {
     setOptions({
       key: process.env.NEXT_PUBLIC_GOOGLE_API_KEY!,
     });
 
     importLibrary("places").then(() => {
-      if (!inputRef.current) return;
-
-      const autocomplete = new (window as any).google.maps.places.Autocomplete(
-        inputRef.current,
-        {
-          types: ["(cities)"],
-        },
-      );
-
-      autocomplete.addListener("place_changed", () => {
-        const place = autocomplete.getPlace();
-
-        setData({
-          ...data,
-          location: place.formatted_address || place.name,
-        });
-      });
+      setGoogleLoaded(true);
     });
   }, []);
+
+  const handleChange = (value: string) => {
+    setData({ ...data, location: value });
+
+    if (!value || !googleLoaded) {
+      setSuggestions([]);
+      return;
+    }
+
+    const service = new (
+      window as any
+    ).google.maps.places.AutocompleteService();
+    service.getPlacePredictions({ input: value }, (predictions: any[]) => {
+      setSuggestions(predictions || []);
+    });
+
+    setShowDropdown(true);
+  };
+
+  // useEffect(() => {
+  //   function handleClickOutside(event: MouseEvent) {
+  //     if (
+  //       inputRef.current &&
+  //       !inputRef.current.contains(event.target as Node)
+  //     ) {
+  //       setShowDropdown(false);
+  //     }
+  //   }
+  //   document.addEventListener("mousedown", handleClickOutside);
+  //   return () => document.removeEventListener("mousedown", handleClickOutside);
+  // }, []);
 
   return (
     <div className="min-h-dvh flex flex-col items-center">
@@ -343,33 +362,36 @@ const BirthDetails = ({ data, setData, onNext }: any) => {
               <DatePickerTime />
             </div>
 
-            <input
-              ref={inputRef}
-              autoComplete="off"
-              autoCorrect="off"
-              spellCheck={false}
-              inputMode="text"
-              name="birth_location"
-              className="
-                py-4 px-5
-                w-full rounded-[10px] border border-[rgba(248,247,252,0.1)]
-                text-start font-Satoshi text-[#F8F7FC] text-[13px] font-normal tracking-[1.95px]
-                placeholder:text-[#F8F7FC]
-                placeholder:font-Satoshi
-                placeholder:text-[13px]
-                placeholder:font-normal
-                placeholder:tracking-[1.95px]
-              "
-              style={
-                {
-                  leadingTrim: "both",
-                  textEdge: "cap",
-                } as any
-              }
-              placeholder="Location of Birth"
-              value={data.location || ""}
-              onChange={(e) => setData({ ...data, location: e.target.value })}
-            />
+            <div className="relative w-full">
+              <input
+                ref={inputRef}
+                autoComplete="off"
+                spellCheck={false}
+                placeholder="Location of Birth"
+                value={data.location || ""}
+                onChange={(e) => handleChange(e.target.value)}
+                onFocus={() => setShowDropdown(true)}
+                className="py-4 px-5 w-full rounded-[10px] border border-[rgba(248,247,252,0.1)] text-start font-Satoshi text-[#F8F7FC] text-[13px] font-normal tracking-[1.95px] placeholder:text-[#F8F7FC]"
+              />
+
+              {showDropdown && suggestions.length > 0 && (
+                <div className="absolute top-full left-0 w-full bg-[#1c1c2c] border border-[rgba(248,247,252,0.1)] rounded-[10px] z-50 max-h-60 overflow-auto mt-1">
+                  {suggestions.map((s) => (
+                    <div
+                      key={s.place_id}
+                      className="px-4 py-2 cursor-pointer hover:bg-[#2a2a40]"
+                      onClick={() => {
+                        setData({ ...data, location: s.description });
+
+                        setShowDropdown(false);
+                      }}
+                    >
+                      {s.description}
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
           </div>
         </div>
 
