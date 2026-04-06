@@ -17,8 +17,11 @@ import {
 export function DatePickerTime() {
   const [open, setOpen] = React.useState(false);
   const [date, setDate] = React.useState<Date | undefined>(undefined);
-  const [time, setTime] = React.useState<string | null>(null);
+
   const [openTime, setOpenTime] = React.useState(false);
+  const timeInputRef = React.useRef<HTMLInputElement>(null);
+  const [time, setTime] = React.useState<string | null>(null);
+
   return (
     <FieldGroup className="w-full flex flex-col gap-4">
       <Field>
@@ -58,27 +61,23 @@ export function DatePickerTime() {
         </Popover>
       </Field>
 
-      <Field className="w-full ">
-        <Popover open={openTime} onOpenChange={setOpenTime}>
-          <PopoverTrigger asChild>
-            <Button
-              variant="outline"
-              className="w-full  text-[13px] font-normal tracking-[1.95px] justify-between font-Satoshi py-6 px-5 border border-[rgba(248,247,252,0.1)] text-[#F8F7FC]"
-            >
-              {time ? time : "Time of Birth ( HH:MM - AM/PM )"}
-              <ChevronDownIcon />
-            </Button>
-          </PopoverTrigger>
+      <Field className="w-full">
+        <input
+          ref={timeInputRef}
+          type="time"
+          className="hidden"
+          value={time || ""}
+          onChange={(e) => setTime(e.target.value)}
+        />
 
-          <PopoverContent className="w-full p-4 bg-white text-black">
-            <Input
-              type="time"
-              value={time || ""}
-              onChange={(e) => setTime(e.target.value)}
-              className="w-full"
-            />
-          </PopoverContent>
-        </Popover>
+        <Button
+          variant="outline"
+          className="w-full text-[13px] font-normal tracking-[1.95px] justify-between font-Satoshi py-6 px-5 border border-[rgba(248,247,252,0.1)] text-[#F8F7FC]"
+          onClick={() => timeInputRef.current?.showPicker?.()} // triggers native picker
+        >
+          {time ? time : "Time of Birth ( HH:MM - AM/PM )"}
+          <ChevronDownIcon />
+        </Button>
       </Field>
     </FieldGroup>
   );
