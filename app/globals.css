@@ -99,12 +99,6 @@
 
 /* 1. CSS Reset / Mobile-first */
 
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-}
-
 /* 2. Global body styles */
 body {
   font-family: "Recoleta", "Satoshi", sans-serif; /* global font stack */
@@ -113,7 +107,6 @@ body {
   min-height: 100vh;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  overflow-x: hidden;
 }
 
 /* globals.css */

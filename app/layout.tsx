@@ -28,7 +28,7 @@ export default function RootLayout({
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="h-screen w-full overflow-x-hidden bg-[#0d1220] lg:grid lg:grid-cols-[20%_1fr]">
+      <body className="min-h-screen w-full overflow-x-hidden bg-[#0d1220] lg:grid lg:grid-cols-[20%_1fr]">
         {/* Sidebar */}
         <aside className="hidden lg:block border-r border-[#E8E9F31A] h-[calc(100vh-70px)] mt-17.5">
           {/* <Sidebar /> */}
