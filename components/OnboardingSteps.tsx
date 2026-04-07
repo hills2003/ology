@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
 import ologyLogo from "@/public/ologyLogo.svg";
@@ -18,7 +18,7 @@ import TimePicker from "react-time-picker";
 import "react-time-picker/dist/TimePicker.css";
 import { DatePickerTime } from "./DateTimePicker";
 import { setOptions, importLibrary } from "@googlemaps/js-api-loader";
-
+import { debounce } from "lodash";
 type WrapperProps = {
   children: React.ReactNode;
 };
@@ -292,23 +292,26 @@ const BirthDetails = ({ data, setData, onNext }: any) => {
     });
   }, []);
 
-  const handleChange = (value: string) => {
-    setData({ ...data, location: value });
+  const handleChange = useCallback(
+    debounce((value: string) => {
+      setData({ ...data, location: value });
 
-    if (!value || !googleLoaded) {
-      setSuggestions([]);
-      return;
-    }
+      if (!value || !googleLoaded) {
+        setSuggestions([]);
+        return;
+      }
 
-    const service = new (
-      window as any
-    ).google.maps.places.AutocompleteService();
-    service.getPlacePredictions({ input: value }, (predictions: any[]) => {
-      setSuggestions(predictions || []);
-    });
+      const service = new (
+        window as any
+      ).google.maps.places.AutocompleteService();
+      service.getPlacePredictions({ input: value }, (predictions: any[]) => {
+        setSuggestions(predictions || []);
+      });
 
-    setShowDropdown(true);
-  };
+      setShowDropdown(true);
+    }, 300),
+    [googleLoaded, data],
+  );
 
   // useEffect(() => {
   //   function handleClickOutside(event: MouseEvent) {
