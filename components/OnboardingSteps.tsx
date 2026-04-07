@@ -375,14 +375,14 @@ const BirthDetails = ({ data, setData, onNext }: any) => {
               />
 
               {showDropdown && suggestions.length > 0 && (
-                <div className="absolute top-full left-0 w-full bg-[#1c1c2c] border border-[rgba(248,247,252,0.1)] rounded-[10px] z-50 max-h-60 overflow-auto mt-1">
+                <div className="absolute top-full left-0 w-full bg-[#1c1c2c] border border-[rgba(248,247,252,0.1)] rounded-[10px] z-50 max-h-[calc(100vh-150px)] overflow-auto mt-1">
                   {suggestions.map((s) => (
                     <div
                       key={s.place_id}
                       className="px-4 py-2 cursor-pointer hover:bg-[#2a2a40]"
-                      onClick={() => {
+                      onMouseDown={(e) => {
+                        e.preventDefault();
                         setData({ ...data, location: s.description });
-
                         setShowDropdown(false);
                       }}
                     >
