@@ -79,7 +79,7 @@ const EnterName = ({ data, setData, onNext }: any) => {
   const canProceed = data.name?.trim().length > 0;
 
   return (
-    <div className="min-h-dvh flex flex-col items-stretch flex-1 overflow-y-auto overflow-x-hidden">
+    <div className="min-h-dvh flex flex-col items-center flex-1 overflow-auto">
       <div className="flex justify-between items-center pt-5 pr-5 pb-0 pl-5 shrink-0">
         <div className="flex items-center gap-[23.662px] pt-[43.67px] pb-[43.67px]">
           <div className="relative w-28 h-[46.667px] aspect-[12/5]">
