@@ -648,14 +648,12 @@ export default function OnboardingSteps({ Layout }: any) {
           transition={{ duration: 0.35 }}
         >
           {" "}
-          <Layout videoSrc={step.videoSrc} overlay centerContent={false}>
-            <StepComponent
-              data={data}
-              setData={setData}
-              onNext={next}
-              onBack={back}
-            />
-          </Layout>
+          <StepComponent
+            data={data}
+            setData={setData}
+            onNext={next}
+            onBack={back}
+          />
         </motion.div>
       </AnimatePresence>
     </div>
