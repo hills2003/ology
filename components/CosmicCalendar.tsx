@@ -1,6 +1,6 @@
 import Image from "next/image";
 import React from "react";
-import { Calendar } from "./ui/calendar";
+import { Calendar } from "./ui/styledcalendar";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import {

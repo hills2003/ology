@@ -23,13 +23,6 @@ export function DatePickerTime() {
   return (
     <FieldGroup className="w-full flex flex-col gap-4">
       <Field>
-        {/* <FieldLabel
-          htmlFor="date-picker-optional"
-          className="w-full flex justify-start font-Satoshi text-[#F8F7FC] text-center font-satoshi text-[13px] font-normal leading-6 tracking-[1.95px] uppercase"
-        >
-          Date of Birth ( MM / DD / YYYY )
-        </FieldLabel> */}
-
         <Popover open={open} onOpenChange={setOpen}>
           <PopoverTrigger asChild>
             <Button

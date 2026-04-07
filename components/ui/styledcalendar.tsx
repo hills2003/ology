@@ -203,6 +203,18 @@ function CalendarDayButton({
     if (modifiers.focused) ref.current?.focus();
   }, [modifiers.focused]);
 
+  const specialDays: { date: Date; color: string }[] = [
+    { date: new Date(2026, 3, 1), color: "bg-[rgba(127,168,212,0.3)]" }, // Feb 1
+    { date: new Date(2026, 3, 4), color: "bg-[rgba(155,143,212,0.3)]" }, // Feb 4
+    { date: new Date(2026, 3, 8), color: "bg-[rgba(212,165,116,0.3)]" }, // Feb 8
+    { date: new Date(2026, 3, 14), color: "bg-[rgba(155,143,212,0.3)]" }, // Feb 14
+    { date: new Date(2026, 3, 17), color: "bg-[rgba(155,143,212,0.3)]" }, // Feb 17
+    { date: new Date(2026, 3, 20), color: "bg-[rgba(155,143,212,0.3)]" }, // Feb 20
+    { date: new Date(2026, 3, 22), color: "bg-[rgba(155,143,212,0.3)]" }, // Feb 22
+    { date: new Date(2026, 3, 26), color: "bg-[rgba(155,143,212,0.3)]" }, // Feb 26
+    { date: new Date(2026, 3, 27), color: "bg-[rgba(155,143,212,0.3)]" }, // Feb 27
+  ];
+
   return (
     <Button
       ref={ref}
@@ -224,7 +236,7 @@ function CalendarDayButton({
         "relative isolate z-10 aspect-square w-[36px] h-[36px] min-w-[36px] rounded-full border-0",
         "group-data-[focused=true]/day:z-10 group-data-[focused=true]/day:ring-[3px] group-data-[focused=true]/day:ring-ring/50",
         "data-[selected-single=true]:bg-primary data-[selected-single=true]:text-primary-foreground",
-
+        specialDays.find((d) => isSameDay(d.date, day.date))?.color,
         defaultClassNames.day,
         className,
       )}
