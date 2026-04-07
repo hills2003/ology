@@ -18,22 +18,11 @@ import TimePicker from "react-time-picker";
 import "react-time-picker/dist/TimePicker.css";
 import { DatePickerTime } from "./DateTimePicker";
 import { setOptions, importLibrary } from "@googlemaps/js-api-loader";
-import { debounce } from "lodash";
+import debounce from "lodash.debounce";
+
 type WrapperProps = {
   children: React.ReactNode;
 };
-
-// const zodiac = [{
-//   icon:taurusIcon,
-//   text:"Taurus"
-// },{
-//    icon:scorpioIcon,
-//   text:"Scorpio"
-// },
-// {
-//    icon:virgoIcon,
-//   text:"Virgo"
-// }]
 
 const Wrapper = ({ children }: WrapperProps) => {
   return <div className="w-full">{children}</div>;
